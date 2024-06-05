@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function SpaceInvader() {
   const [bullets, setBullets] = useState([]);
@@ -11,36 +11,30 @@ export default function SpaceInvader() {
   const [alienDirection, setAlienDirection] = useState(1); // 1 for right, -1 for left
   const [explosions, setExplosions] = useState([]);
 
+  const gameAreaRef = useRef();
+
   useEffect(() => {
     initAliens();
-    const gameLoop = setInterval(updateGame, 100); // Slowed down for better gameplay
+    const gameLoop = setInterval(updateGame, 100); // Adjusted for smoother gameplay
     window.addEventListener('keydown', move);
-    window.addEventListener('keyup', stopMove);
 
     return () => {
       clearInterval(gameLoop);
       window.removeEventListener('keydown', move);
-      window.removeEventListener('keyup', stopMove);
     };
   }, []);
 
   const move = (event) => {
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-      if (event.key === 'ArrowLeft') {
-        setPosition((prev) => Math.max(prev - 15, 0));
-      } else if (event.key === 'ArrowRight') {
-        setPosition((prev) => Math.min(prev + 15, 450));
-      }
+    if (event.key === 'ArrowLeft' && position > 0) {
+      setPosition((prev) => Math.max(prev - 15, 0));
+    } else if (event.key === 'ArrowRight' && position < 450) {
+      setPosition((prev) => Math.min(prev + 15, 450));
     } else if (event.key === ' ') {
-      shootBullet(position);
+      shootBullet();
     }
   };
 
-  const stopMove = () => {
-    // This function can be used to stop movement if you implement continuous movement on keydown
-  };
-
-  const shootBullet = (position) => {
+  const shootBullet = () => {
     setBullets((prevBullets) => [...prevBullets, { x: position + 22.5, y: 480 }]);
   };
 
@@ -159,7 +153,7 @@ export default function SpaceInvader() {
   };
 
   return (
-    <div className="game">
+    <div className="game" ref={gameAreaRef}>
       <div className="spaceship" style={{ left: position + 'px' }}></div>
       {aliens.map((alien, index) => (
         <div key={index} className="alien" style={{ top: alien.y + 'px', left: alien.x + 'px' }}></div>
@@ -189,8 +183,9 @@ export default function SpaceInvader() {
           bottom: 10px;
           width: 50px;
           height: 50px;
-          background-image: url('/spaceship.gif');
+          background-image: url('/spaceship.png');
           background-size: cover;
+          background-repeat: no-repeat;
         }
         .alien {
           position: absolute;
@@ -198,6 +193,7 @@ export default function SpaceInvader() {
           height: 30px;
           background-image: url('/alien.png');
           background-size: cover;
+          background-repeat: no-repeat;
         }
         .bullet, .enemyBullet {
           position: absolute;
@@ -225,6 +221,7 @@ export default function SpaceInvader() {
           height: 30px;
           background-image: url('/explosion.png'); /* Placeholder for explosion image */
           background-size: cover;
+          background-repeat: no-repeat;
         }
         .score, .lives, .game-over {
           color: white;

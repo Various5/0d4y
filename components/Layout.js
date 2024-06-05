@@ -74,7 +74,10 @@ export default function Layout({ children }) {
             {isGamesOpen && (
               <ul className={styles.submenu}>
                 <li>
-                  <Link href="/games/space-invader">Space Invader</Link>
+                  <Link href="/games/space-invader">buggy :D Space Invader</Link>
+                </li>
+                <li>
+                  <Link href="/games/rpgclicker">RPG Clicker</Link>
                 </li>
                 {/* Add more games here if needed */}
               </ul>
