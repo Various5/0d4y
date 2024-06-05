@@ -8,7 +8,7 @@ export default function Layout({ children }) {
   const session = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isGamesOpen, setIsGamesOpen] = useState(false); // State for the Games submenu
+  const [isGamesOpen, setIsGamesOpen] = useState(false);
 
   const toggleMenu = (event) => {
     console.log('toggleMenu called');
@@ -37,11 +37,10 @@ export default function Layout({ children }) {
 
     document.addEventListener('click', closeMenu);
 
-    // Cleanup function to remove the event listener when the component unmounts
     return () => {
       document.removeEventListener('click', closeMenu);
     };
-  }, [isOpen]); // Dependency array includes isOpen so the effect runs whenever isOpen changes
+  }, [isOpen]);
 
   return (
     <div className={styles.container}>
