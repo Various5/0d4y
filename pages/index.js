@@ -1,71 +1,26 @@
-import { useCallback, useEffect, useState } from 'react'
-import Button from '../components/Button'
-import ClickCount from '../components/ClickCount'
-import styles from '../styles/home.module.css'
+import Layout from '../components/Layout';
 
-function throwError() {
-  console.log(
-    // The function body() is not defined
-    document.body()
-  )
-}
-
-function Home() {
-  const [count, setCount] = useState(0)
-  const increment = useCallback(() => {
-    setCount((v) => v + 1)
-  }, [setCount])
-
-  useEffect(() => {
-    const r = setInterval(() => {
-      increment()
-    }, 1000)
-
-    return () => {
-      clearInterval(r)
-    }
-  }, [increment])
-
+export default function Home() {
   return (
-    <main className={styles.main}>
-      <h1>Fast Refresh Demo</h1>
-      <p>
-        Fast Refresh is a Next.js feature that gives you instantaneous feedback
-        on edits made to your React components, without ever losing component
-        state.
-      </p>
-      <hr className={styles.hr} />
-      <div>
+    <Layout>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+        <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
+          <img src="/images/header.jpg" alt="Header" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        </div>
+        <h1>Ahoy, matey! Welcome aboard 0d4y.ch!</h1>
         <p>
-          Auto incrementing value. The counter won't reset after edits or if
-          there are errors.
+          The most swashbuckling platform on the seven seas! We've got a treasure trove of tools, news, and services to help ye navigate the choppy waters of daily life.
         </p>
-        <p>Current value: {count}</p>
-      </div>
-      <hr className={styles.hr} />
-      <div>
-        <p>Component with state.</p>
-        <ClickCount />
-      </div>
-      <hr className={styles.hr} />
-      <div>
         <p>
-          The button below will throw 2 errors. You'll see the error overlay to
-          let you know about the errors but it won't break the page or reset
-          your state.
+          So hoist the anchor and set sail for adventure with us at 0d4y.ch! Whether you're in search of the latest news, productivity tools, or avenues to connect with others, 0d4y.ch has got you covered. Dive into our site to discover more about what we can offer you.
         </p>
-        <Button
-          onClick={(e) => {
-            setTimeout(() => document.parentNode(), 0)
-            throwError()
-          }}
-        >
-          Throw an Error
-        </Button>
+        <p>
+          We're continually updating and broadening our services, so make sure to visit often for the newest tools, news, and features. We're excited to welcome you to the 0d4y.ch community!
+        </p>
+        <p>
+          Feel free to reach out to us via our <a href="/about">contact page</a> if you have any questions or suggestions.
+        </p>
       </div>
-      <hr className={styles.hr} />
-    </main>
-  )
+    </Layout>
+  );
 }
-
-export default Home

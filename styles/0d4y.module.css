@@ -1,0 +1,35 @@
+/* styles/0d4y.module.css */
+.table {
+  color : #000000;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: #d6d6d6;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table td, .table th {
+  background-color : #7f7d7d;
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #ffffff;
+  white-space: nowrap;
+}
+
+.table tr:hover {
+  background-color: #e4e4e4dc;
+}
+
+.score {
+  transition: background-color 0.3s ease;
+}
+
+.score[data-score="10"] {
+  background-color: #ff0000;
+}
+
+.score[data-score="0"] {
+  background-color: #ffcccc;
+}
