@@ -148,3 +148,40 @@
   width: 50%;
   margin: 0 auto;
 }
+
+.hasSubmenu {
+  position: relative;
+}
+
+.submenu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #333;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+}
+
+.submenu li {
+  padding: 10px;
+}
+
+.submenu a {
+  color: white;
+  text-decoration: none;
+}
+
+.hasSubmenu button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.hasSubmenu button:focus + .submenu,
+.hasSubmenu button:hover + .submenu,
+.hasSubmenu .submenu:hover {
+  display: block;
+}

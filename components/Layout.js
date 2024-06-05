@@ -8,20 +8,29 @@ export default function Layout({ children }) {
   const session = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isGamesOpen, setIsGamesOpen] = useState(false); // State for the Games submenu
 
-  const toggleMenu = () => {
+  const toggleMenu = (event) => {
+    console.log('toggleMenu called');
+    event.stopPropagation();
     setIsOpen(!isOpen);
   };
 
+  const toggleGamesMenu = (event) => {
+    event.stopPropagation();
+    setIsGamesOpen(!isGamesOpen);
+  };
+
+  useEffect(() => {
+    console.log('isOpen has changed:', isOpen);
+  }, [isOpen]);
+
   useEffect(() => {
     const closeMenu = (event) => {
-      var menuElement = document.querySelector('.menu');
-      var hamburgerElement = document.querySelector('.hamburger');
-
+      var menuElement = document.querySelector('.' + styles.menu);
       var isClickInsideMenu = menuElement && menuElement.contains(event.target);
-      var isClickOnHamburger = hamburgerElement && hamburgerElement.contains(event.target);
 
-      if (!isClickInsideMenu && !isClickOnHamburger && isOpen) {
+      if (!isClickInsideMenu && isOpen) {
         setIsOpen(false);
       }
     };
@@ -59,10 +68,19 @@ export default function Layout({ children }) {
           <li>
             <Link href="/about">About</Link>
           </li>
-          <li>
-            <Link href="/games">Games</Link>
+          <li className={styles.hasSubmenu}>
+            <button onClick={toggleGamesMenu}>
+              Games {isGamesOpen ? '▲' : '▼'}
+            </button>
+            {isGamesOpen && (
+              <ul className={styles.submenu}>
+                <li>
+                  <Link href="/games/space-invader">Space Invader</Link>
+                </li>
+                {/* Add more games here if needed */}
+              </ul>
+            )}
           </li>
-          {/* ... other menu items ... */}
         </ul>
       </nav>
       <main className={styles.main}>{children}</main>
