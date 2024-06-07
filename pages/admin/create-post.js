@@ -1,5 +1,5 @@
 // pages/admin/create-post.js
-import { getSession } from 'next-auth/client';
+import { getSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import axios from 'axios';
 
