@@ -1,10 +1,10 @@
+// pages/api/auth/[...nextauth].js
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
-require('dotenv').config();
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export default NextAuth({
   providers: [
-    Providers.Credentials({
+    CredentialsProvider({
       name: 'Credentials',
       credentials: {
         username: { label: "Username", type: "text" },
