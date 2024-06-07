@@ -9,7 +9,6 @@ export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,11 +29,6 @@ export default function Layout({ children }) {
   const toggleMenu = (event) => {
     event.stopPropagation();
     setIsOpen(!isOpen);
-  };
-
-  const toggleAdminMenu = (event) => {
-    event.stopPropagation();
-    setIsAdminOpen(!isAdminOpen);
   };
 
   useEffect(() => {
@@ -61,6 +55,37 @@ export default function Layout({ children }) {
           ☰
         </button>
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
+          <li>
+            <Link href="/">Home</Link>
+            {session && (
+              <ul className={styles.submenu}>
+                <li>
+                  <Link href="/admin/create-post">Create Blog Post</Link>
+                </li>
+              </ul>
+            )}
+          </li>
+          <li>
+            <Link href="/blog">Blog</Link>
+          </li>
+          <li>
+            <Link href="/tools">Tools</Link>
+          </li>
+          <li>
+            <Link href="/downloads">Downloads</Link>
+          </li>
+          <li>
+            <Link href="/0d4ys">0D4Y's</Link>
+          </li>
+          <li>
+            <Link href="/iptools">IP-Tools</Link>
+          </li>
+          <li>
+            <Link href="/about">About</Link>
+          </li>
+          <li>
+            <Link href="/auth/register">Register</Link>
+          </li>
           <li className={styles.login}>
             {status === 'loading' ? (
               <div>Loading...</div>
@@ -88,47 +113,6 @@ export default function Layout({ children }) {
                 <button type="submit">Sign In</button>
               </form>
             )}
-          </li>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/blog">Blog</Link>
-          </li>
-          {session && (
-            <>
-              <li className={styles.hasSubmenu}>
-                <button onClick={toggleAdminMenu} className={styles.submenuButton}>
-                  Admin {isAdminOpen ? '▲' : '▼'}
-                </button>
-                {isAdminOpen && (
-                  <ul className={styles.submenu}>
-                    <li>
-                      <Link href="/admin/create-post">Create Blog Post</Link>
-                    </li>
-                    {/* Add more admin links here if needed */}
-                  </ul>
-                )}
-              </li>
-            </>
-          )}
-          <li>
-            <Link href="/tools">Tools</Link>
-          </li>
-          <li>
-            <Link href="/downloads">Downloads</Link>
-          </li>
-          <li>
-            <Link href="/0d4ys">0D4Y's</Link>
-          </li>
-          <li>
-            <Link href="/iptools">IP-Tools</Link>
-          </li>
-          <li>
-            <Link href="/about">About</Link>
-          </li>
-          <li>
-            <Link href="/auth/register">Register</Link>
           </li>
         </ul>
       </nav>
