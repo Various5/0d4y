@@ -93,9 +93,16 @@ export default function Layout({ children }) {
           </li>
           <li>
             {session ? (
-              <button onClick={() => signOut()}>Sign Out</button>
+              <>
+                <button onClick={() => signOut()}>Sign Out</button>
+              </>
             ) : (
-              <button onClick={() => signIn()}>Sign In</button>
+              <>
+                <button onClick={() => signIn()}>Sign In</button>
+                <Link href="/auth/register">
+                  <button>Register</button>
+                </Link>
+              </>
             )}
           </li>
         </ul>

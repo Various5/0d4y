@@ -1,6 +1,8 @@
 // pages/api/auth/[...nextauth].js
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
+import db from '../../../db';
 
 export default NextAuth({
   providers: [
@@ -11,13 +13,23 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials) => {
-        const user = { id: 1, name: 'Admin', email: 'admin@example.com' };
-        
-        if (credentials.username === 'admin' && credentials.password === 'password') {
-          return Promise.resolve(user);
-        } else {
-          return Promise.resolve(null);
+        const user = await new Promise((resolve, reject) => {
+          db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
+            if (err) reject(err);
+            resolve(results[0]);
+          });
+        });
+
+        if (!user || !user.active) {
+          return null;
         }
+
+        const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+        if (!isValidPassword) {
+          return null;
+        }
+
+        return { id: user.id, name: user.username, email: user.email };
       }
     })
   ],
