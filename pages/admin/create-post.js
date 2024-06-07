@@ -1,10 +1,16 @@
+// pages/admin/create-post.js
+import { getSession } from 'next-auth/client';
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CreatePost = () => {
+const CreatePost = ({ session }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
+
+  if (!session) {
+    return <p>You must be signed in to create a blog post.</p>;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,5 +42,14 @@ const CreatePost = () => {
     </form>
   );
 };
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return {
+    props: {
+      session
+    }
+  }
+}
 
 export default CreatePost;

@@ -53,6 +53,9 @@ export default function Layout({ children }) {
             <Link href="/">Home</Link>
           </li>
           <li>
+            <Link href="/blog">Blog</Link>
+          </li>
+          <li>
             <Link href="/tools">Tools</Link>
           </li>
           <li>
