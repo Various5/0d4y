@@ -1,22 +1,39 @@
 /* styles/Layout.module.css */
+:root {
+  --background-color: #1e1e1e;
+  --nav-background: rgba(34, 34, 34, 0.9);
+  --nav-text-color: #fff;
+  --nav-hover-bg: rgba(34, 34, 34, 0.7);
+  --submenu-bg: rgba(24, 24, 24, 0.9);
+  --submenu-hover-bg: rgba(24, 24, 24, 0.7);
+  --accent-color: #4caf50;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--nav-text-color);
+  font-family: Arial, sans-serif;
+}
+
 .container {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.1);
 }
 
 .nav {
-  background: rgba(15, 15, 15, 0.75);
+  background: var(--nav-background);
   backdrop-filter: blur(10px);
-  color: white;
+  color: var(--nav-text-color);
   padding: 10px;
 }
 
 .hamburger {
   background: none;
   border: none;
-  color: white;
+  color: var(--nav-text-color);
   font-size: 24px;
   cursor: pointer;
 }
@@ -38,16 +55,17 @@
   position: relative;
   padding: 10px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  width: max-content;
 }
 
 .menu li a {
-  color: white;
+  color: var(--nav-text-color);
   text-decoration: none;
   display: block;
 }
 
 .menu li:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--nav-hover-bg);
 }
 
 .hasSubmenu {
@@ -59,7 +77,7 @@
   position: absolute;
   left: 100%;
   top: 0;
-  background: rgba(15, 15, 15, 0.9);
+  background: var(--submenu-bg);
   backdrop-filter: blur(10px);
   list-style: none;
   margin: 0;
@@ -73,7 +91,7 @@
 }
 
 .submenu li a {
-  color: white;
+  color: var(--nav-text-color);
   text-decoration: none;
 }
 
@@ -84,6 +102,7 @@
 .login {
   padding: 10px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
+  width: max-content;
 }
 
 .loginForm {
@@ -101,7 +120,7 @@
 .loginForm button {
   padding: 5px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--accent-color);
   border: none;
   color: white;
   border-radius: 5px;

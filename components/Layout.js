@@ -57,14 +57,20 @@ export default function Layout({ children }) {
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
           <li>
             <Link href="/">Home</Link>
-            {session && (
+          </li>
+          {session && (
+            <li className={styles.hasSubmenu}>
+              <button className={styles.submenuButton}>
+                Admin Tools {isOpen ? '▲' : '▼'}
+              </button>
               <ul className={styles.submenu}>
                 <li>
                   <Link href="/admin/create-post">Create Blog Post</Link>
                 </li>
+                {/* Add more admin links here if needed */}
               </ul>
-            )}
-          </li>
+            </li>
+          )}
           <li>
             <Link href="/blog">Blog</Link>
           </li>
