@@ -44,11 +44,18 @@ export default NextAuth({
     error: '/auth/error',  // Custom error page
   },
   callbacks: {
-    async session({ session, token, user }) {
-      if (!session.user) {
-        session.user = { name: 'Guest', email: 'guest@example.com', role: 'guest' };
+    async session({ session, token }) {
+      if (token) {
+        session.user = token.user;
       }
       return session;
-    }
-  }
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+  },
+  debug: true,
 });
