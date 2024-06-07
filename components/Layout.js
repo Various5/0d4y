@@ -6,7 +6,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './Layout.module.css';
 
 export default function Layout({ children }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isGamesOpen, setIsGamesOpen] = useState(false);
@@ -72,7 +72,7 @@ export default function Layout({ children }) {
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          {session && (
+          {session && session.user && session.user.role !== 'guest' && (
             <li>
               <Link href="/admin/create-post">Create Blog Post</Link>
             </li>
@@ -109,8 +109,11 @@ export default function Layout({ children }) {
             )}
           </li>
           <li>
-            {session ? (
+            {status === 'loading' ? (
+              <div>Loading...</div>
+            ) : session ? (
               <>
+                <span>{session.user.name}</span>
                 <button onClick={() => signOut()}>Sign Out</button>
               </>
             ) : (

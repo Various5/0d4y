@@ -42,5 +42,13 @@ export default NextAuth({
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error',  // Custom error page
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      if (!session.user) {
+        session.user = { name: 'Guest', email: 'guest@example.com', role: 'guest' };
+      }
+      return session;
+    }
   }
 });
