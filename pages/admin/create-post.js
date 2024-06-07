@@ -59,6 +59,15 @@ export default function CreatePost({ session }) {
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: { session },
   };
