@@ -59,8 +59,6 @@ export default function CreatePost({ session }) {
 export async function getServerSideProps(context) {
   const session = await getSession(context);
 
-  console.log("Session: ", session);  // Add this line for debugging
-
   return {
     props: { session },
   };

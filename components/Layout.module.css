@@ -1,152 +1,47 @@
+/* styles/Layout.module.css */
 .container {
-  background-color: #1a202c;
-  color: #a0aec0;
-  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
+  background-color: #333;
+  color: white;
 }
 
 .hamburger {
   background: none;
   border: none;
-  color: #a0aec0;
-  font-size: 2rem;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .menu {
   list-style: none;
+  margin: 0;
   padding: 0;
-  display: flex;
+  display: none;
   flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 65%;
-  
-  background-size: cover;
-  background-color: rgba(45, 55, 72, 0.9); /* Added transparency */
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  padding: 2rem;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .menu.open {
-  transform: translateX(0);
+  display: flex;
 }
 
 .menu li {
-  padding: 1rem;
-  border-bottom: 1px solid #4a5568;
-  transition: background 0.3s ease-in-out;
-  background-color: rgba(255, 255, 255, 0.1); /* Added background color and transparency */
+  padding: 10px;
+  border-bottom: 1px solid #444;
 }
 
+.menu li a {
+  color: white;
+  text-decoration: none;
+}
 
 .menu li:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Change background color on hover */
-}
-
-.menu a {
-  color: #a0aec0;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-.menu a:hover {
-  color: #63b3ed;
-}
-
-.main {
-  flex: 1;
-  padding: 1rem;
-}
-
-.downloads-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-}
-
-.downloads-table th, .downloads-table td {
-  border: 1px solid #4a5568;
-  padding: 1rem;
-  text-align: left;
-}
-
-.downloads-table th {
-  background-color: #2d3748;
-  color: #a0aec0;
-}
-
-.downloads-table td {
-  background-color: #1a202c;
-  color: #a0aec0;
-}
-
-.about-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.about-content img {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 1rem;
-}
-
-.about-content p {
-  text-align: center;
-  max-width: 800px;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 2rem;
-  max-width: 600px;
-  margin: 2rem auto;
-}
-
-.contact-form label {
-  color: #a0aec0;
-}
-
-.contact-form input, .contact-form textarea {
-  padding: 0.5rem;
-  background-color: #2d3748;
-  color: #a0aec0;
-  border: none;
-  border-radius: 0.25rem;
-  width: 100%;
-}
-
-.contact-form textarea {
-  height: 150px;
-  resize: vertical;
-}
-
-.contact-form input[type="submit"] {
-  background-color: #4a5568;
-  cursor: pointer;
-  padding: 0.5rem;
-  text-align: center;
-  color: #a0aec0;
-  border-radius: 0.25rem;
-  width: 50%;
-  margin: 0 auto;
+  background-color: #555;
 }
 
 .hasSubmenu {
@@ -154,34 +49,50 @@
 }
 
 .submenu {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  background: #333;
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: #333;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #444;
 }
 
 .submenu li {
   padding: 10px;
+  border-bottom: 1px solid #444;
 }
 
-.submenu a {
+.submenu li a {
   color: white;
   text-decoration: none;
 }
 
-.hasSubmenu button {
+.hasSubmenu:hover .submenu {
+  display: block;
+}
+
+.submenuButton {
   background: none;
   border: none;
   color: white;
   cursor: pointer;
 }
 
-.hasSubmenu button:focus + .submenu,
-.hasSubmenu button:hover + .submenu,
-.hasSubmenu .submenu:hover {
-  display: block;
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
 }
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm input {
+  margin-bottom: 5px;
+  padding: 5px;

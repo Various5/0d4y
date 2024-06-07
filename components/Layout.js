@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isGamesOpen, setIsGamesOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -28,23 +28,18 @@ export default function Layout({ children }) {
   };
 
   const toggleMenu = (event) => {
-    console.log('toggleMenu called');
     event.stopPropagation();
     setIsOpen(!isOpen);
   };
 
-  const toggleGamesMenu = (event) => {
+  const toggleAdminMenu = (event) => {
     event.stopPropagation();
-    setIsGamesOpen(!isGamesOpen);
+    setIsAdminOpen(!isAdminOpen);
   };
 
   useEffect(() => {
-    console.log('isOpen has changed:', isOpen);
-  }, [isOpen]);
-
-  useEffect(() => {
     const closeMenu = (event) => {
-      var menuElement = document.querySelector('.' + styles.menu);
+      var menuElement = document.querySelector(`.${styles.menu}`);
       var isClickInsideMenu = menuElement && menuElement.contains(event.target);
 
       if (!isClickInsideMenu && isOpen) {
@@ -66,16 +61,56 @@ export default function Layout({ children }) {
           ☰
         </button>
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
+          <li className={styles.login}>
+            {status === 'loading' ? (
+              <div>Loading...</div>
+            ) : session ? (
+              <>
+                <span>{session.user?.name || 'Guest'}</span>
+                <button onClick={() => signOut()}>Sign Out</button>
+              </>
+            ) : (
+              <form onSubmit={handleSignIn} className={styles.loginForm}>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button type="submit">Sign In</button>
+              </form>
+            )}
+          </li>
           <li>
             <Link href="/">Home</Link>
           </li>
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          {session && session.user && session.user.role !== 'guest' && (
-            <li>
-              <Link href="/admin/create-post">Create Blog Post</Link>
-            </li>
+          {session && (
+            <>
+              <li className={styles.hasSubmenu}>
+                <button onClick={toggleAdminMenu} className={styles.submenuButton}>
+                  Admin {isAdminOpen ? '▲' : '▼'}
+                </button>
+                {isAdminOpen && (
+                  <ul className={styles.submenu}>
+                    <li>
+                      <Link href="/admin/create-post">Create Blog Post</Link>
+                    </li>
+                    {/* Add more admin links here if needed */}
+                  </ul>
+                )}
+              </li>
+            </>
           )}
           <li>
             <Link href="/tools">Tools</Link>
@@ -92,52 +127,8 @@ export default function Layout({ children }) {
           <li>
             <Link href="/about">About</Link>
           </li>
-          <li className={styles.hasSubmenu}>
-            <button onClick={toggleGamesMenu}>
-              Games {isGamesOpen ? '▲' : '▼'}
-            </button>
-            {isGamesOpen && (
-              <ul className={styles.submenu}>
-                <li>
-                  <Link href="/games/space-invader">buggy :D Space Invader</Link>
-                </li>
-                <li>
-                  <Link href="/games/rpgclicker">RPG Clicker</Link>
-                </li>
-                {/* Add more games here if needed */}
-              </ul>
-            )}
-          </li>
           <li>
-            {status === 'loading' ? (
-              <div>Loading...</div>
-            ) : session ? (
-              <>
-                <span>{session.user?.name || 'Guest'}</span>
-                <button onClick={() => signOut()}>Sign Out</button>
-              </>
-            ) : (
-              <form onSubmit={handleSignIn}>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <button type="submit">Sign In</button>
-                <Link href="/auth/register">
-                  <button type="button">Register</button>
-                </Link>
-              </form>
-            )}
+            <Link href="/auth/register">Register</Link>
           </li>
         </ul>
       </nav>
