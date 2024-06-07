@@ -96,3 +96,13 @@
 .loginForm input {
   margin-bottom: 5px;
   padding: 5px;
+}
+
+.loginForm button {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.main {
+  padding: 20px;
+}
