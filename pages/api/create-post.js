@@ -1,6 +1,7 @@
+// pages/api/create-post.js
+import { getSession } from 'next-auth/react';
 import db from '../../db';
 import sanitizeHtml from 'sanitize-html';
-import { getSession } from 'next-auth/client';
 
 export default async (req, res) => {
   const session = await getSession({ req });
