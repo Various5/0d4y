@@ -1,12 +1,4 @@
 /* styles/Layout.module.css */
-:global(body, html) {
-  margin: 0;
-  padding: 0;
-  background-color: #1e1e1e;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
-
 .container {
   width: 100%;
   display: flex;
