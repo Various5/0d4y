@@ -8,6 +8,10 @@ export default function CreatePost({ session }) {
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
 
+  if (!session) {
+    return <p>You must be signed in to create a blog post.</p>;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.post('/api/create-post', {
@@ -19,10 +23,6 @@ export default function CreatePost({ session }) {
       // Reset form or show success message
     }
   };
-
-  if (!session) {
-    return <p>You must be signed in to create a blog post.</p>;
-  }
 
   return (
     <form onSubmit={handleSubmit}>

@@ -113,7 +113,7 @@ export default function Layout({ children }) {
               <div>Loading...</div>
             ) : session ? (
               <>
-                <span>{session.user.name}</span>
+                <span>{session.user?.name || 'Guest'}</span>
                 <button onClick={() => signOut()}>Sign Out</button>
               </>
             ) : (
