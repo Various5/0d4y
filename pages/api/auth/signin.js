@@ -1,29 +1,45 @@
-// pages/auth/signin.js
-import { getCsrfToken } from 'next-auth/react';
+// pages/api/auth/[...nextauth].js
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
+import db from '../../../db';
 
-export default function SignIn({ csrfToken }) {
-  return (
-    <div>
-      <form method="post" action="/api/auth/callback/credentials">
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <label>
-          Username
-          <input name="username" type="text" />
-        </label>
-        <label>
-          Password
-          <input name="password" type="password" />
-        </label>
-        <button type="submit">Sign in</button>
-      </form>
-    </div>
-  );
-}
+export default NextAuth({
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
+      authorize: async (credentials) => {
+        const user = await new Promise((resolve, reject) => {
+          db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
+            if (err) reject(err);
+            resolve(results[0]);
+          });
+        });
 
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context)
-    }
+        if (!user || !user.active) {
+          return null;
+        }
+
+        const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+        if (!isValidPassword) {
+          return null;
+        }
+
+        return { id: user.id, name: user.username, email: user.email };
+      }
+    })
+  ],
+  session: {
+    jwt: true,
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+  pages: {
+    signIn: '/auth/signin',
   }
-}
+});
