@@ -44,7 +44,7 @@ export default NextAuth({
     error: '/auth/error',  // Custom error page
   },
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       if (token) {
         session.user = token.user;
       }
