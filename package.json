@@ -8,12 +8,14 @@
   "dependencies": {
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
     "next": "^14.1.1",
     "next-auth": "^4.24.7",
     "phaser": "^3.80.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-table": "^7.8.0",
+    "sanitize-html": "^2.13.0",
     "vuex": "^4.1.0"
   }
 }
