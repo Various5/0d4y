@@ -1,3 +1,4 @@
+// components/Layout.js
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -9,6 +10,22 @@ export default function Layout({ children }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isGamesOpen, setIsGamesOpen] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const res = await signIn('credentials', {
+      redirect: false,
+      username,
+      password,
+    });
+    if (res?.ok) {
+      router.reload();
+    } else {
+      console.error('Sign-in error', res?.error);
+    }
+  };
 
   const toggleMenu = (event) => {
     console.log('toggleMenu called');
@@ -97,12 +114,26 @@ export default function Layout({ children }) {
                 <button onClick={() => signOut()}>Sign Out</button>
               </>
             ) : (
-              <>
-                <button onClick={() => signIn()}>Sign In</button>
+              <form onSubmit={handleSignIn}>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button type="submit">Sign In</button>
                 <Link href="/auth/register">
-                  <button>Register</button>
+                  <button type="button">Register</button>
                 </Link>
-              </>
+              </form>
             )}
           </li>
         </ul>

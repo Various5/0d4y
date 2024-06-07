@@ -41,5 +41,6 @@ export default NextAuth({
   },
   pages: {
     signIn: '/auth/signin',
+    error: '/auth/error',  // Custom error page
   }
 });
