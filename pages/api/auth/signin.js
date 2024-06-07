@@ -1,8 +1,7 @@
 // pages/auth/signin.js
-import { providers, signIn, getSession, csrfToken } from 'next-auth/client';
-import { useEffect } from 'react';
+import { getCsrfToken } from 'next-auth/react';
 
-export default function SignIn({ providers, csrfToken }) {
+export default function SignIn({ csrfToken }) {
   return (
     <div>
       <form method="post" action="/api/auth/callback/credentials">
@@ -21,9 +20,10 @@ export default function SignIn({ providers, csrfToken }) {
   );
 }
 
-SignIn.getInitialProps = async (context) => {
+export async function getServerSideProps(context) {
   return {
-    providers: await providers(),
-    csrfToken: await csrfToken(context)
+    props: {
+      csrfToken: await getCsrfToken(context)
+    }
   }
 }
