@@ -1,4 +1,3 @@
-// pages/admin/create-post.js
 import { getSession } from 'next-auth/react';
 import { useState } from 'react';
 import axios from 'axios';
@@ -8,12 +7,10 @@ export default function CreatePost({ session }) {
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
 
-  // Check if the user is authenticated
   if (!session) {
     return <p>You must be signed in to create a blog post.</p>;
   }
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
