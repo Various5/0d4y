@@ -13,23 +13,28 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       authorize: async (credentials) => {
-        const user = await new Promise((resolve, reject) => {
-          db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
-            if (err) reject(err);
-            resolve(results[0]);
+        try {
+          const [user] = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
+              if (err) reject(err);
+              resolve(results);
+            });
           });
-        });
 
-        if (!user || !user.active) {
+          if (!user || !user.active) {
+            return null;
+          }
+
+          const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+          if (!isValidPassword) {
+            return null;
+          }
+
+          return { id: user.id, name: user.username, email: user.email };
+        } catch (error) {
+          console.error('Error in authorize function:', error);
           return null;
         }
-
-        const isValidPassword = await bcrypt.compare(credentials.password, user.password);
-        if (!isValidPassword) {
-          return null;
-        }
-
-        return { id: user.id, name: user.username, email: user.email };
       }
     })
   ],
@@ -44,7 +49,7 @@ export default NextAuth({
     error: '/auth/error',  // Custom error page
   },
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (token) {
         session.user = token.user;
       }

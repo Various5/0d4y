@@ -12,7 +12,6 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { title, content, featured_image } = req.body;
 
-    // Perform your database operations here
     db.query(
       'INSERT INTO posts (title, content, featured_image, user_id) VALUES (?, ?, ?, ?)',
       [title, content, featured_image, session.user.id],
