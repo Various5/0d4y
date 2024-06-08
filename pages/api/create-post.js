@@ -1,11 +1,8 @@
-// pages/api/create-post.js
 import { getSession } from 'next-auth/react';
 import db from '../../db';
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
-
-  console.log('Session:', session); // Debugging line
 
   if (!session) {
     return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
@@ -13,8 +10,6 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     const { title, content, featured_image } = req.body;
-
-    console.log('Request body:', req.body); // Debugging line
 
     if (!title || !content || !session.user.id) {
       return res.status(400).json({ message: 'Title, content, and user ID are required.' });
