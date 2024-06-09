@@ -1,45 +1,61 @@
-// pages/api/auth/[...nextauth].js
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import db from '../../../db';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 
-export default NextAuth({
-  providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
-      },
-      authorize: async (credentials) => {
-        const user = await new Promise((resolve, reject) => {
-          db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
-            if (err) reject(err);
-            resolve(results[0]);
-          });
-        });
+export default function SignIn() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-        if (!user || !user.active) {
-          return null;
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-        const isValidPassword = await bcrypt.compare(credentials.password, user.password);
-        if (!isValidPassword) {
-          return null;
-        }
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        username,
+        password,
+      });
 
-        return { id: user.id, name: user.username, email: user.email };
+      console.log('SignIn result:', result);
+
+      if (result.error) {
+        setError(result.error);
       }
-    })
-  ],
-  session: {
-    jwt: true,
-  },
-  jwt: {
-    secret: process.env.JWT_SECRET,
-  },
-  pages: {
-    signIn: '/auth/signin',
-  }
-});
+    } catch (err) {
+      setError('Failed to sign in');
+      console.error('SignIn error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Username:
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Password:
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </label>
+      <button type="submit" disabled={loading}>
+        {loading ? 'Loading...' : 'Sign In'}
+      </button>
+      {error && <p>{error}</p>}
+    </form>
+  );
+}

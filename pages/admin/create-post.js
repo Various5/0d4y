@@ -1,11 +1,24 @@
+import { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/react';
-import { useState } from 'react';
 import axios from 'axios';
 
-export default function CreatePost({ session }) {
+export default function CreatePost({ session: serverSession }) {
+  const [session, setSession] = useState(serverSession);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const currentSession = await getSession();
+      setSession(currentSession);
+      console.log('Session on client-side:', currentSession); // Debugging line
+    };
+
+    if (!serverSession) {
+      fetchSession();
+    }
+  }, [serverSession]);
 
   if (!session) {
     return <p>You must be signed in to create a blog post.</p>;
@@ -19,10 +32,11 @@ export default function CreatePost({ session }) {
         content,
         featured_image: featuredImage,
       }, {
-        headers: {
-          Authorization: `Bearer ${session.token}`, // Ensure session token is passed correctly
-        },
+        withCredentials: true,
       });
+
+      console.log('Create post response:', response); // Debugging line
+
       if (response.status === 200) {
         // Reset form or show success message
       }
@@ -65,6 +79,8 @@ export default function CreatePost({ session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+
+  console.log('Session in getServerSideProps:', session); // Debugging line
 
   if (!session) {
     return {

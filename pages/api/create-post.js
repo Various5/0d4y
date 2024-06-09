@@ -4,10 +4,10 @@ import db from '../../db';
 export default async function handler(req, res) {
   const session = await getSession({ req });
 
-  console.log('Session:', session); // Debugging line
+  console.log('Session in create-post API:', session); // Debugging line
 
   if (!session) {
-    console.log('No session found'); // Debugging line
+    console.log('No session found in create-post API'); // Debugging line
     return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
   }
 

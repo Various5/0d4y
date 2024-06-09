@@ -1,44 +1,68 @@
-import { getSession } from 'next-auth/react';
-import db from '../../db';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
+import db from '../../../db';
 
-export default async function handler(req, res) {
-  const session = await getSession({ req });
+export default NextAuth({
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" }
+      },
+      authorize: async (credentials) => {
+        try {
+          const [user] = await new Promise((resolve, reject) => {
+            db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
+              if (err) reject(err);
+              resolve(results);
+            });
+          });
 
-  console.log('Session:', session); // Debugging line
-
-  if (!session) {
-    console.log('No session found'); // Debugging line
-    return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
-  }
-
-  if (req.method === 'POST') {
-    const { title, content, featured_image } = req.body;
-
-    console.log('Request body:', req.body); // Debugging line
-
-    if (!title || !content || !session.user.id) {
-      console.log('Invalid request data'); // Debugging line
-      return res.status(400).json({ message: 'Title, content, and user ID are required.' });
-    }
-
-    try {
-      db.query(
-        'INSERT INTO posts (title, content, featured_image, user_id) VALUES (?, ?, ?, ?)',
-        [title, content, featured_image, session.user.id],
-        (err, results) => {
-          if (err) {
-            console.log('Database error:', err); // Debugging line
-            return res.status(500).json({ message: 'Database error', error: err });
+          if (!user) {
+            console.log('User not found');
+            return null;
           }
-          res.status(200).json({ message: 'Post created successfully' });
+
+          const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+          if (!isValidPassword) {
+            console.log('Invalid password');
+            return null;
+          }
+
+          console.log('Login successful:', user);
+          return { id: user.id, name: user.username, email: user.email };
+        } catch (error) {
+          console.error('Error in authorize function:', error);
+          return null;
         }
-      );
-    } catch (error) {
-      console.log('Server error:', error); // Debugging line
-      return res.status(500).json({ message: 'Server error', error: error.message });
-    }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
-}
+      }
+    })
+  ],
+  session: {
+    jwt: true,
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
+  pages: {
+    signIn: '/auth/signin',
+    error: '/auth/error',
+  },
+  callbacks: {
+    async session({ session, token }) {
+      console.log('Session callback:', token);
+      session.user = token.user;
+      return session;
+    },
+    async jwt({ token, user }) {
+      console.log('JWT callback:', user);
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+  },
+  debug: true,
+});
