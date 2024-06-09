@@ -7,6 +7,7 @@ export default async function handler(req, res) {
   console.log('Session:', session); // Add this line for debugging
 
   if (!session) {
+    console.log('No session found'); // Add this line for debugging
     return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
   }
 
@@ -16,6 +17,7 @@ export default async function handler(req, res) {
     console.log('Request body:', req.body); // Add this line for debugging
 
     if (!title || !content || !session.user.id) {
+      console.log('Invalid request data'); // Add this line for debugging
       return res.status(400).json({ message: 'Title, content, and user ID are required.' });
     }
 
