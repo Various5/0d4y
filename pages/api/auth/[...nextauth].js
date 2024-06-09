@@ -1,8 +1,3 @@
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import db from '../../../db';
-
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -20,15 +15,18 @@ export default NextAuth({
             });
           });
 
-          if (!user || !user.active) {
+          if (!user) {
+            console.log('User not found');
             return null;
           }
 
           const isValidPassword = await bcrypt.compare(credentials.password, user.password);
           if (!isValidPassword) {
+            console.log('Invalid password');
             return null;
           }
 
+          console.log('Login successful:', user);
           return { id: user.id, name: user.username, email: user.email };
         } catch (error) {
           console.error('Error in authorize function:', error);
@@ -45,13 +43,11 @@ export default NextAuth({
   },
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error',  // Custom error page
+    error: '/auth/error',
   },
   callbacks: {
     async session({ session, token }) {
-      if (token) {
-        session.user = token.user;
-      }
+      session.user = token.user;
       return session;
     },
     async jwt({ token, user }) {
