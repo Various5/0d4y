@@ -1,3 +1,8 @@
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import bcrypt from 'bcryptjs';
+import db from '../../../db';
+
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -8,9 +13,14 @@ export default NextAuth({
       },
       authorize: async (credentials) => {
         try {
+          console.log('Connecting to database...');
           const [user] = await new Promise((resolve, reject) => {
             db.query('SELECT * FROM users WHERE username = ?', [credentials.username], (err, results) => {
-              if (err) reject(err);
+              if (err) {
+                console.error('Database error:', err);
+                reject(err);
+              }
+              console.log('Database results:', results);
               resolve(results);
             });
           });
@@ -47,10 +57,12 @@ export default NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
+      console.log('Session callback:', token);
       session.user = token.user;
       return session;
     },
     async jwt({ token, user }) {
+      console.log('JWT callback:', user);
       if (user) {
         token.user = user;
       }
