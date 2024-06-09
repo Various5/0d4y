@@ -18,6 +18,10 @@ export default function CreatePost({ session }) {
         title,
         content,
         featured_image: featuredImage,
+      }, {
+        headers: {
+          Authorization: `Bearer ${session.token}`, // Ensure session token is passed correctly
+        },
       });
       if (response.status === 200) {
         // Reset form or show success message
