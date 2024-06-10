@@ -17,16 +17,26 @@ export default NextAuth({
   },
   callbacks: {
     async jwt(token, user) {
-      if (user) {
-        token.id = user.id;
+      try {
+        if (user) {
+          token.id = user.id;
+        }
+        console.log('JWT callback:', token, user);
+        return token;
+      } catch (error) {
+        console.error('JWT callback error:', error);
+        throw error;
       }
-      console.log('JWT callback:', token, user); // Debugging line
-      return token;
     },
     async session(session, token) {
-      session.user.id = token.id;
-      console.log('Session callback:', session, token); // Debugging line
-      return session;
+      try {
+        session.user.id = token.id;
+        console.log('Session callback:', session, token);
+        return session;
+      } catch (error) {
+        console.error('Session callback error:', error);
+        throw error;
+      }
     },
   },
   debug: true, // Enable debug mode
