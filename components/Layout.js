@@ -8,22 +8,6 @@ export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    const res = await signIn('credentials', {
-      redirect: false,
-      username,
-      password,
-    });
-    if (res?.ok) {
-      router.reload();
-    } else {
-      console.error('Sign-in error', res?.error);
-    }
-  };
 
   const toggleMenu = (event) => {
     event.stopPropagation();
@@ -32,8 +16,8 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     const closeMenu = (event) => {
-      var menuElement = document.querySelector(`.${styles.menu}`);
-      var isClickInsideMenu = menuElement && menuElement.contains(event.target);
+      const menuElement = document.querySelector(`.${styles.menu}`);
+      const isClickInsideMenu = menuElement && menuElement.contains(event.target);
 
       if (!isClickInsideMenu && isOpen) {
         setIsOpen(false);
@@ -54,79 +38,33 @@ export default function Layout({ children }) {
           ☰
         </button>
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/blog">Blog</Link>
-          </li>
-          {session && (
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/blog">Blog</Link></li>
+          {status === 'unauthenticated' && (
             <>
-              <li>
-                <Link href="/tools">Tools</Link>
-              </li>
-              <li>
-                <Link href="/downloads">Downloads</Link>
-              </li>
-              <li>
-                <Link href="/0d4ys">0D4Y's</Link>
-              </li>
-              <li>
-                <Link href="/iptools">IP-Tools</Link>
-              </li>
-              <li>
-                <Link href="/about">About</Link>
-              </li>
-              <li>
-                <Link href="/profile">Profile</Link>
-              </li>
+              <li><Link href="/auth/signin">Login</Link></li>
+            </>
+          )}
+          {status === 'authenticated' && (
+            <>
+              <li><Link href="/tools">Tools</Link></li>
+              <li><Link href="/downloads">Downloads</Link></li>
+              <li><Link href="/0d4ys">0D4Y's</Link></li>
+              <li><Link href="/iptools">IP-Tools</Link></li>
+              <li><Link href="/about">About</Link></li>
+              <li><Link href="/profile">Profile</Link></li>
               <li className={styles.hasSubmenu}>
                 <button className={styles.submenuButton}>
-                  Admin Tools {isOpen ? '▲' : '▼'}
+                  Admin Tools
                 </button>
                 <ul className={styles.submenu}>
-                  <li>
-                    <Link href="/admin/create-post">Create Blog Post</Link>
-                  </li>
-                  {/* Add more admin links here if needed */}
+                  <li><Link href="/admin/create-post">Create Blog Post</Link></li>
                 </ul>
               </li>
-            </>
-          )}
-          {!session && (
-            <>
               <li>
-                <Link href="/auth/register">Register</Link>
-              </li>
-              <li className={styles.login}>
-                {status === 'loading' ? (
-                  <div>Loading...</div>
-                ) : (
-                  <form onSubmit={handleSignIn} className={styles.loginForm}>
-                    <input
-                      type="text"
-                      placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      required
-                    />
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <button type="submit">Sign In</button>
-                  </form>
-                )}
+                <button onClick={() => signOut()}>Sign Out</button>
               </li>
             </>
-          )}
-          {session && (
-            <li>
-              <button onClick={() => signOut()}>Sign Out</button>
-            </li>
           )}
         </ul>
       </nav>
