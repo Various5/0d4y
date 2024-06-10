@@ -10,33 +10,23 @@ export default NextAuth({
   ],
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error', // Redirect here on error.
+    error: '/auth/error', // Redirect here on error
   },
   session: {
     jwt: true,
   },
   callbacks: {
     async jwt(token, user) {
-      try {
-        if (user) {
-          token.id = user.id;
-        }
-        console.log('JWT callback:', token, user);
-        return token;
-      } catch (error) {
-        console.error('JWT callback error:', error);
-        throw error;
+      if (user) {
+        token.id = user.id;
       }
+      console.log('JWT callback:', token, user); // Debugging line
+      return token;
     },
     async session(session, token) {
-      try {
-        session.user.id = token.id;
-        console.log('Session callback:', session, token);
-        return session;
-      } catch (error) {
-        console.error('Session callback error:', error);
-        throw error;
-      }
+      session.user.id = token.id;
+      console.log('Session callback:', session, token); // Debugging line
+      return session;
     },
   },
   debug: true, // Enable debug mode
