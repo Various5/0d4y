@@ -10,7 +10,6 @@ const SignIn = () => {
     <div>
       <h1>Sign In</h1>
       <button onClick={() => handleSignIn('google')}>Sign in with Google</button>
-      <button onClick={() => handleSignIn('github')}>Sign in with GitHub</button>
     </div>
   );
 };
