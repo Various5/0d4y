@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
-const options = {
+export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -10,26 +10,34 @@ const options = {
   ],
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error',
+    error: '/auth/error', // Redirect here on error.
   },
   session: {
     jwt: true,
   },
   callbacks: {
     async jwt(token, user) {
-      if (user) {
-        token.id = user.id;
+      try {
+        if (user) {
+          token.id = user.id;
+        }
+        console.log('JWT callback:', token, user);
+        return token;
+      } catch (error) {
+        console.error('JWT callback error:', error);
+        throw error;
       }
-      console.log('JWT callback:', token, user); // Debugging line
-      return token;
     },
     async session(session, token) {
-      session.user.id = token.id;
-      console.log('Session callback:', session, token); // Debugging line
-      return session;
+      try {
+        session.user.id = token.id;
+        console.log('Session callback:', session, token);
+        return session;
+      } catch (error) {
+        console.error('Session callback error:', error);
+        throw error;
+      }
     },
   },
   debug: true, // Enable debug mode
-};
-
-export default NextAuth(options);
+});
