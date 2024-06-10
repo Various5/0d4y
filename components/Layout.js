@@ -10,6 +10,7 @@ export default function Layout({ children }) {
   const toggleMenu = (event) => {
     event.stopPropagation();
     setIsOpen(!isOpen);
+    console.log('Menu toggled:', isOpen); // Debugging line
   };
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export default function Layout({ children }) {
 
       if (!isClickInsideMenu && isOpen) {
         setIsOpen(false);
+        console.log('Menu closed'); // Debugging line
       }
     };
 
@@ -28,6 +30,9 @@ export default function Layout({ children }) {
       document.removeEventListener('click', closeMenu);
     };
   }, [isOpen]);
+
+  console.log('Session status:', status); // Debugging line
+  console.log('Session data:', session); // Debugging line
 
   return (
     <div className={styles.container}>
@@ -39,10 +44,7 @@ export default function Layout({ children }) {
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
           {status === 'unauthenticated' && (
-            <li>
-              <button onClick={() => signIn('google')}>Login with Google</button>
-              <button onClick={() => signIn('github')}>Login with GitHub</button>
-            </li>
+            <li><Link href="/auth/signin">Login</Link></li>
           )}
           {status === 'authenticated' && (
             <>
