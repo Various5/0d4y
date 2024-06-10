@@ -8,6 +8,7 @@ const isLoggingEnabled = process.env.NEXT_PUBLIC_ENABLE_LOGGING === 'true';
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const toggleMenu = (event) => {
     event.stopPropagation();
@@ -32,6 +33,13 @@ export default function Layout({ children }) {
       document.removeEventListener('click', closeMenu);
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      setShowSuccessMessage(true);
+      setTimeout(() => setShowSuccessMessage(false), 3000); // Hide the message after 3 seconds
+    }
+  }, [status]);
 
   if (isLoggingEnabled) {
     console.log('Session status:', status); // Conditional logging
@@ -73,7 +81,10 @@ export default function Layout({ children }) {
           )}
         </ul>
       </nav>
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        {showSuccessMessage && <div className={styles.successMessage}>Login successful!</div>}
+        {children}
+      </main>
     </div>
   );
 }
