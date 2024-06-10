@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './Layout.module.css';
 
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = (event) => {
@@ -41,9 +39,10 @@ export default function Layout({ children }) {
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
           {status === 'unauthenticated' && (
-            <>
-              <li><Link href="/auth/signin">Login</Link></li>
-            </>
+            <li>
+              <button onClick={() => signIn('google')}>Login with Google</button>
+              <button onClick={() => signIn('github')}>Login with GitHub</button>
+            </li>
           )}
           {status === 'authenticated' && (
             <>
