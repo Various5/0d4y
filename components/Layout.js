@@ -56,7 +56,9 @@ export default function Layout({ children }) {
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
           {status === 'unauthenticated' && (
-            <li><Link href="/auth/signin">Login</Link></li>
+            <li>
+              <button onClick={() => signIn('google')}>Login</button>
+            </li>
           )}
           {status === 'authenticated' && (
             <>
@@ -75,7 +77,7 @@ export default function Layout({ children }) {
                 </ul>
               </li>
               <li>
-                <button onClick={() => signOut()}>Sign Out</button>
+                <button onClick={() => signOut()}>Logout</button>
               </li>
             </>
           )}
