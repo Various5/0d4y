@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
-export default NextAuth({
+const options = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -10,7 +10,7 @@ export default NextAuth({
   ],
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error', // Redirect here on error.
+    error: '/auth/error',
   },
   session: {
     jwt: true,
@@ -30,4 +30,6 @@ export default NextAuth({
     },
   },
   debug: true, // Enable debug mode
-});
+};
+
+export default NextAuth(options);
