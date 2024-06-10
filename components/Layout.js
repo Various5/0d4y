@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './Layout.module.css';
 
+const isLoggingEnabled = process.env.NEXT_PUBLIC_ENABLE_LOGGING === 'true';
+
 export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +12,7 @@ export default function Layout({ children }) {
   const toggleMenu = (event) => {
     event.stopPropagation();
     setIsOpen(!isOpen);
-    console.log('Menu toggled:', isOpen); // Debugging line
+    if (isLoggingEnabled) console.log('Menu toggled:', isOpen); // Conditional logging
   };
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export default function Layout({ children }) {
 
       if (!isClickInsideMenu && isOpen) {
         setIsOpen(false);
-        console.log('Menu closed'); // Debugging line
+        if (isLoggingEnabled) console.log('Menu closed'); // Conditional logging
       }
     };
 
@@ -31,8 +33,10 @@ export default function Layout({ children }) {
     };
   }, [isOpen]);
 
-  console.log('Session status:', status); // Debugging line
-  console.log('Session data:', session); // Debugging line
+  if (isLoggingEnabled) {
+    console.log('Session status:', status); // Conditional logging
+    console.log('Session data:', session); // Conditional logging
+  }
 
   return (
     <div className={styles.container}>
