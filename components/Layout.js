@@ -1,4 +1,3 @@
-// components/Layout.js
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -58,68 +57,77 @@ export default function Layout({ children }) {
           <li>
             <Link href="/">Home</Link>
           </li>
-          {session && (
-            <li className={styles.hasSubmenu}>
-              <button className={styles.submenuButton}>
-                Admin Tools {isOpen ? '▲' : '▼'}
-              </button>
-              <ul className={styles.submenu}>
-                <li>
-                  <Link href="/admin/create-post">Create Blog Post</Link>
-                </li>
-                {/* Add more admin links here if needed */}
-              </ul>
-            </li>
-          )}
           <li>
             <Link href="/blog">Blog</Link>
           </li>
-          <li>
-            <Link href="/tools">Tools</Link>
-          </li>
-          <li>
-            <Link href="/downloads">Downloads</Link>
-          </li>
-          <li>
-            <Link href="/0d4ys">0D4Y's</Link>
-          </li>
-          <li>
-            <Link href="/iptools">IP-Tools</Link>
-          </li>
-          <li>
-            <Link href="/about">About</Link>
-          </li>
-          <li>
-            <Link href="/auth/register">Register</Link>
-          </li>
-          <li className={styles.login}>
-            {status === 'loading' ? (
-              <div>Loading...</div>
-            ) : session ? (
-              <>
-                <span>{session.user?.name || 'Guest'}</span>
-                <button onClick={() => signOut()}>Sign Out</button>
-              </>
-            ) : (
-              <form onSubmit={handleSignIn} className={styles.loginForm}>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <button type="submit">Sign In</button>
-              </form>
-            )}
-          </li>
+          {session && (
+            <>
+              <li>
+                <Link href="/tools">Tools</Link>
+              </li>
+              <li>
+                <Link href="/downloads">Downloads</Link>
+              </li>
+              <li>
+                <Link href="/0d4ys">0D4Y's</Link>
+              </li>
+              <li>
+                <Link href="/iptools">IP-Tools</Link>
+              </li>
+              <li>
+                <Link href="/about">About</Link>
+              </li>
+              <li>
+                <Link href="/profile">Profile</Link>
+              </li>
+              <li className={styles.hasSubmenu}>
+                <button className={styles.submenuButton}>
+                  Admin Tools {isOpen ? '▲' : '▼'}
+                </button>
+                <ul className={styles.submenu}>
+                  <li>
+                    <Link href="/admin/create-post">Create Blog Post</Link>
+                  </li>
+                  {/* Add more admin links here if needed */}
+                </ul>
+              </li>
+            </>
+          )}
+          {!session && (
+            <>
+              <li>
+                <Link href="/auth/register">Register</Link>
+              </li>
+              <li className={styles.login}>
+                {status === 'loading' ? (
+                  <div>Loading...</div>
+                ) : (
+                  <form onSubmit={handleSignIn} className={styles.loginForm}>
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <button type="submit">Sign In</button>
+                  </form>
+                )}
+              </li>
+            </>
+          )}
+          {session && (
+            <li>
+              <button onClick={() => signOut()}>Sign Out</button>
+            </li>
+          )}
         </ul>
       </nav>
       <main className={styles.main}>{children}</main>
