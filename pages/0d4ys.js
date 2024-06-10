@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import styles from '../styles/0d4y.module.css';
 
 export async function getServerSideProps() {
-  const res = await fetch('http://localhost:3000/api/scrape');
+  const res = await fetch('https://0d4y.ch/api/scrape');
   const data = await res.json();
 
   return {
