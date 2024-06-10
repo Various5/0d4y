@@ -1,6 +1,7 @@
 // pages/blog.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Layout from '../components/Layout';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -15,10 +16,6 @@ const Blog = () => {
     <div>
       <header>
         <h1>Blog</h1>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/blog">Blog</a>
-        </nav>
       </header>
       <main>
         {posts.map(post => (

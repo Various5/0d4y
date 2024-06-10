@@ -47,4 +47,4 @@ const SignIn = () => {
   );
 };
 
-expo
+export default SignIn;
