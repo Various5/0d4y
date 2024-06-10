@@ -11,7 +11,7 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error',
+    error: '/auth/error', // Redirect here on error
   },
   session: {
     jwt: true,
@@ -56,5 +56,5 @@ export default NextAuth({
       return session;
     },
   },
-  debug: true,
+  debug: true, // Enable debug mode
 });
