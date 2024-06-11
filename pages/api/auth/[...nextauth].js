@@ -1,4 +1,3 @@
-// pages/api/auth/[...nextauth].js
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -12,7 +11,7 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error',
+    error: '/auth/error', // Redirect here on error
   },
   session: {
     jwt: true,
@@ -41,7 +40,7 @@ export default NextAuth({
         httpOnly: true,
         sameSite: 'none',
         path: '/',
-        secure: process.env.NEXTAUTH_URL.startswith('https://'),
+        secure: process.env.NEXTAUTH_URL.startsWith('https://'),
       },
     },
   },
