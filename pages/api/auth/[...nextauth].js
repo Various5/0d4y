@@ -1,3 +1,4 @@
+// pages/api/auth/[...nextauth].js
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -11,7 +12,7 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error', // Redirect here on error
+    error: '/auth/error',
   },
   session: {
     jwt: true,
@@ -21,7 +22,7 @@ export default NextAuth({
       name: `__Secure-next-auth.session-token`,
       options: {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         path: '/',
         secure: process.env.NEXTAUTH_URL.startsWith('https://'),
       },
@@ -29,7 +30,7 @@ export default NextAuth({
     callbackUrl: {
       name: `__Secure-next-auth.callback-url`,
       options: {
-        sameSite: 'lax',
+        sameSite: 'none',
         path: '/',
         secure: process.env.NEXTAUTH_URL.startsWith('https://'),
       },
@@ -38,9 +39,9 @@ export default NextAuth({
       name: `__Host-next-auth.csrf-token`,
       options: {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         path: '/',
-        secure: process.env.NEXTAUTH_URL.startsWith('https://'),
+        secure: process.env.NEXTAUTH_URL.startswith('https://'),
       },
     },
   },
