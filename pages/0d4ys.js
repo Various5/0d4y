@@ -1,4 +1,3 @@
-// pages/0d4ys.js
 import { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import Layout from '../components/Layout';
@@ -56,7 +55,7 @@ export default function Contact({ items }) {
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
                   <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : '' }
                   </span>
                 </th>
               ))}

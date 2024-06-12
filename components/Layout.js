@@ -55,6 +55,7 @@ export default function Layout({ children }) {
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
+          <li><Link href="/games">Games</Link></li> {/* Games section visible to all */}
           {status === 'unauthenticated' && (
             <li>
               <button onClick={() => signIn('google')}>Login</button>
