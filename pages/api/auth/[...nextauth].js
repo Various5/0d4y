@@ -16,34 +16,6 @@ export default NextAuth({
   session: {
     jwt: true,
   },
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/',
-        secure: process.env.NEXTAUTH_URL.startsWith('https://'),
-      },
-    },
-    callbackUrl: {
-      name: `__Secure-next-auth.callback-url`,
-      options: {
-        sameSite: 'none',
-        path: '/',
-        secure: process.env.NEXTAUTH_URL.startsWith('https://'),
-      },
-    },
-    csrfToken: {
-      name: `__Host-next-auth.csrf-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/',
-        secure: process.env.NEXTAUTH_URL.startsWith('https://'),
-      },
-    },
-  },
   callbacks: {
     async jwt(token, user) {
       if (user) {
