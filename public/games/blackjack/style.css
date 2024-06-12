@@ -1,0 +1,50 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #228B22;
+    font-family: Arial, sans-serif;
+  }
+  
+  #blackjack-game {
+    text-align: center;
+    color: white;
+  }
+  
+  #dealer, #player {
+    margin: 20px;
+  }
+  
+  #dealer-cards, #player-cards {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+  }
+  
+  .card {
+    width: 60px;
+    height: 90px;
+    margin: 5px;
+    background-color: white;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #000;
+  }
+  
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  

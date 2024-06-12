@@ -35,6 +35,9 @@ export default function Games() {
       <button onClick={() => handleOpenGame('/games/brickbreaker/index.html')}>Play Brick Breaker</button>
       <button onClick={() => handleOpenGame('/games/marioclone/index.html')}>Play Mario Clone</button>
       <button onClick={() => handleOpenGame('/games/luckywheel/index.html')}>Play Lucky Wheel</button>
+      <button onClick={() => handleOpenGame('/games/slotmachine/index.html')}>Play Slot Machine</button>
+      <button onClick={() => handleOpenGame('/games/blackjack/index.html')}>Play Blackjack</button>
+      <button onClick={() => handleOpenGame('/games/roulette/index.html')}>Play Roulette</button>
       {showGame && (
         <div className={styles.overlay}>
           <iframe src={gameUrl} className={styles.gameFrame}></iframe>

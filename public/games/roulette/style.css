@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #006400;
+    font-family: Arial, sans-serif;
+  }
+  
+  #roulette-game {
+    text-align: center;
+    color: white;
+  }
+  
+  canvas {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+  }
+  
+  button, input, select {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  #bet-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  #result {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
