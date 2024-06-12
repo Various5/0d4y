@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/Games.module.css'; // Create this CSS module for the overlay styles
+import React, { useEffect } from 'react';
 
 export default function Games() {
   const [showGame, setShowGame] = useState(false);
