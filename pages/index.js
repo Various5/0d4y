@@ -1,8 +1,6 @@
-import Layout from '../components/Layout';
-
 export default function Home() {
   return (
-    <Layout>
+    <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
         <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
           <img src="/images/header.jpg" alt="Header" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -21,6 +19,6 @@ export default function Home() {
           If you have any questions or suggestions, please don't hesitate to reach out to us through our <a href="/about">contact page</a>.
         </p>
       </div>
-    </Layout>
+    </div>
   );
 }

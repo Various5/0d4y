@@ -1,8 +1,6 @@
-import Layout from '../components/Layout';
-
 export default function About() {
   return (
-    <Layout>
+    <div>
       <h1>About Us</h1>
       <div className="about-content">
         <img src="/path/to/placeholder-image.jpg" alt="Placeholder" />
@@ -13,6 +11,6 @@ export default function About() {
           Our team is composed of dedicated professionals who are passionate about technology and innovation. We're constantly working to improve and expand our platform to better serve our users.
         </p>
       </div>
-    </Layout>
+    </div>
   );
 }

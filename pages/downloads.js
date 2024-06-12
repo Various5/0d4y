@@ -1,8 +1,6 @@
-import Layout from '../components/Layout';
-
 export default function Downloads() {
   return (
-    <Layout>
+    <div>
       <h1>Downloads</h1>
       <p>Here you can find all the downloadable content we offer.</p>
       <table>
@@ -26,6 +24,6 @@ export default function Downloads() {
           </tr>
         </tbody>
       </table>
-    </Layout>
+    </div>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Layout from '../components/Layout';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +11,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <Layout>
+    <div>
       <header>
         <h1>Blog</h1>
       </header>
@@ -61,7 +60,7 @@ const Blog = () => {
           {/* Subscription form */}
         </section>
       </footer>
-    </Layout>
+    </div>
   );
 };
 

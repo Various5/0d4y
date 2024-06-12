@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import Layout from '../components/Layout';
 import styles from '../styles/0d4y.module.css';
 
 export async function getServerSideProps() {
@@ -45,7 +44,7 @@ export default function Contact({ items }) {
   } = useTable({ columns, data }, useSortBy);
 
   return (
-    <Layout>
+    <div>
       <h1>0d4y's:</h1>
       <table {...getTableProps()} className={styles.table}>
         <thead>
@@ -79,6 +78,6 @@ export default function Contact({ items }) {
           })}
         </tbody>
       </table>
-    </Layout>
+    </div>
   );
 }
