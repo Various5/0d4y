@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
-import styles from '../styles/Games.module.css'; // Correct path to the CSS module
+import styles from '../styles/Games.module.css';
 
 export default function Games() {
   const [showGame, setShowGame] = useState(false);
-  const [currentGame, setCurrentGame] = useState('');
+  const [gameUrl, setGameUrl] = useState('');
 
-  const handleOpenGame = (game) => {
-    setCurrentGame(game);
+  const handleOpenGame = (url) => {
+    setGameUrl(url);
     setShowGame(true);
   };
 
   const handleCloseGame = (event) => {
     if (event.key === 'Escape') {
       setShowGame(false);
-      setCurrentGame('');
     }
   };
 
@@ -33,11 +32,11 @@ export default function Games() {
   return (
     <Layout>
       <h1>Games</h1>
-      <button onClick={() => handleOpenGame('brickbreaker')}>Play Brick Breaker</button>
-      <button onClick={() => handleOpenGame('marioclone')}>Play Mario Clone</button>
+      <button onClick={() => handleOpenGame('/games/brickbreaker/index.html')}>Play Brick Breaker</button>
+      <button onClick={() => handleOpenGame('/games/marioclone/index.html')}>Play Mario Clone</button>
       {showGame && (
         <div className={styles.overlay}>
-          <iframe src={`/games/${currentGame}/index.html`} className={styles.gameFrame}></iframe>
+          <iframe src={gameUrl} className={styles.gameFrame}></iframe>
         </div>
       )}
     </Layout>

@@ -5,11 +5,11 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #87CEEB;
+    background-color: #87CEEB; /* Light blue sky */
   }
   
   canvas {
     border: 1px solid #000;
-    background: #87CEEB;
+    background-color: #fff;
   }
   
