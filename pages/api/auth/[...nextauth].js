@@ -11,22 +11,25 @@ export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error', // Redirect here on error
+    error: '/auth/error',
   },
   session: {
     jwt: true,
   },
   callbacks: {
-    async jwt(token, user) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
       }
+      console.log('JWT callback:', token);
       return token;
     },
-    async session(session, token) {
+    async session({ session, token }) {
       session.user.id = token.id;
+      console.log('Session callback:', session);
       return session;
     },
   },
-  debug: true, // Enable debug mode
+  
+  debug: true,
 });
