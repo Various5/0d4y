@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, signIn, getSession } from 'next-auth/react';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css';
@@ -115,18 +115,30 @@ export default function CreatePost({ session: serverSession }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  try {
+    const session = await getSession(context);
 
-  if (!session) {
+    console.log('Session in getServerSideProps:', session); // Debugging line
+
+    if (!session) {
+      return {
+        redirect: {
+          destination: '/auth/signin',
+          permanent: false,
+        },
+      };
+    }
+
     return {
-      redirect: {
-        destination: '/auth/signin',
-        permanent: false,
-      },
+      props: { session },
+    };
+  } catch (error) {
+    console.error('Error in getServerSideProps:', error); // Log the error
+    return {
+      props: {
+        session: null,
+        error: 'Failed to load session'
+      }
     };
   }
-
-  return {
-    props: { session },
-  };
 }
