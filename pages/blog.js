@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from '../../styles/Blog.module.css';
+import styles from '../styles/Blog.module.css'; // Adjusted the path
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
