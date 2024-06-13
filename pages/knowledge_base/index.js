@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from '../../styles/KnowledgeBase.module.css'; // Adjusted the path
+import styles from '../../styles/KnowledgeBase.module.css';
 
 export default function KnowledgeBase() {
   const [articles, setArticles] = useState([]);
   const [search, setSearch] = useState('');
+  const [sortOption, setSortOption] = useState('date');
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -12,6 +13,7 @@ export default function KnowledgeBase() {
         const response = await axios.get('/api/knowledge_base', {
           params: {
             search,
+            sort: sortOption,
           },
         });
         setArticles(response.data);
@@ -21,7 +23,7 @@ export default function KnowledgeBase() {
     };
 
     fetchArticles();
-  }, [search]);
+  }, [search, sortOption]);
 
   return (
     <div className={styles.container}>
@@ -33,6 +35,11 @@ export default function KnowledgeBase() {
         onChange={(e) => setSearch(e.target.value)}
         className={styles.search}
       />
+      <select onChange={(e) => setSortOption(e.target.value)} className={styles.sort}>
+        <option value="date">Sort by Date</option>
+        <option value="title">Sort by Title</option>
+        <option value="tags">Sort by Tags</option>
+      </select>
       <div className={styles.articles}>
         {articles.map((article) => (
           <div key={article.id} className={styles.article}>

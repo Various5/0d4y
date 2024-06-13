@@ -75,6 +75,35 @@ const handler = nextConnect()
     } catch (error) {
       res.status(500).json({ message: 'Server error', error: error.message });
     }
+  })
+  .get(async (req, res) => {
+    const { search, sort } = req.query;
+    let query = 'SELECT a.*, GROUP_CONCAT(t.name) as tags FROM knowledge_base_articles a LEFT JOIN knowledge_base_article_tags at ON a.id = at.article_id LEFT JOIN knowledge_base_tags t ON at.tag_id = t.id';
+    let queryParams = [];
+
+    if (search) {
+      query += ' WHERE a.title LIKE ? OR a.content LIKE ?';
+      queryParams.push(`%${search}%`, `%${search}%`);
+    }
+
+    query += ' GROUP BY a.id';
+
+    if (sort === 'title') {
+      query += ' ORDER BY a.title';
+    } else if (sort === 'tags') {
+      query += ' ORDER BY tags';
+    } else {
+      query += ' ORDER BY a.created_at DESC';
+    }
+
+    try {
+      db.query(query, queryParams, (err, results) => {
+        if (err) return res.status(500).json({ message: 'Database error', error: err });
+        res.status(200).json(results);
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
   });
 
 export const config = {
