@@ -31,7 +31,10 @@ const handler = nextConnect()
         'INSERT INTO knowledge_base_articles (title, content) VALUES (?, ?)',
         [title, content],
         (err, results) => {
-          if (err) return res.status(500).json({ message: 'Database error', error: err });
+          if (err) {
+            console.error('Database error during article insertion:', err);
+            return res.status(500).json({ message: 'Database error', error: err });
+          }
 
           const articleId = results.insertId;
 
@@ -39,7 +42,12 @@ const handler = nextConnect()
             const tagQueries = tags.split(',').map(tag =>
               db.query(
                 'INSERT INTO knowledge_base_tags (name) VALUES (?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)',
-                [tag.trim()]
+                [tag.trim()],
+                (tagErr, tagResults) => {
+                  if (tagErr) {
+                    console.error('Database error during tag insertion:', tagErr);
+                  }
+                }
               )
             );
 
@@ -47,7 +55,11 @@ const handler = nextConnect()
               .then(tagResults => {
                 const tagIds = tagResults.map(tagResult => tagResult.insertId);
                 const articleTagQueries = tagIds.map(tagId =>
-                  db.query('INSERT INTO knowledge_base_article_tags (article_id, tag_id) VALUES (?, ?)', [articleId, tagId])
+                  db.query('INSERT INTO knowledge_base_article_tags (article_id, tag_id) VALUES (?, ?)', [articleId, tagId], (articleTagErr) => {
+                    if (articleTagErr) {
+                      console.error('Database error during article-tag insertion:', articleTagErr);
+                    }
+                  })
                 );
 
                 return Promise.all(articleTagQueries);
@@ -59,21 +71,28 @@ const handler = nextConnect()
                       articleId,
                       file.originalname,
                       file.path,
-                    ])
+                    ], (fileErr) => {
+                      if (fileErr) {
+                        console.error('Database error during file insertion:', fileErr);
+                      }
+                    })
                   );
 
                   return Promise.all(fileQueries);
                 }
               })
               .then(() => res.status(200).json({ message: 'Article created successfully' }))
-              .catch(tagError => res.status(500).json({ message: 'Tag insertion error', error: tagError }));
+              .catch(tagError => {
+                console.error('Tag insertion error:', tagError);
+                res.status(500).json({ message: 'Tag insertion error', error: tagError });
+              });
           } else {
             res.status(200).json({ message: 'Article created successfully' });
           }
         }
       );
     } catch (error) {
-      console.error('Server error:', error);
+      console.error('Server error during article creation:', error);
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   })
@@ -103,15 +122,17 @@ const handler = nextConnect()
     }
 
     try {
+      console.log('Executing query:', query);
+      console.log('With parameters:', queryParams);
       db.query(query, queryParams, (err, results) => {
         if (err) {
-          console.error('Database error:', err);
+          console.error('Database error during article retrieval:', err);
           return res.status(500).json({ message: 'Database error', error: err });
         }
         res.status(200).json(results);
       });
     } catch (error) {
-      console.error('Server error:', error);
+      console.error('Server error during article retrieval:', error);
       res.status(500).json({ message: 'Server error', error: error.message });
     }
   });
