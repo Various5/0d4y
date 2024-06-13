@@ -7,6 +7,22 @@ import 'quill/dist/quill.snow.css';
 // Dynamically import the Quill editor
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
+const toolbarOptions = [
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  ['bold', 'italic', 'underline', 'strike'],
+  ['blockquote', 'code-block'],
+  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+  [{ 'script': 'sub' }, { 'script': 'super' }],
+  [{ 'indent': '-1' }, { 'indent': '+1' }],
+  [{ 'direction': 'rtl' }],
+  [{ 'size': ['small', false, 'large', 'huge'] }],
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  [{ 'color': [] }, { 'background': [] }],
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+  ['clean']
+];
+
 export default function CreatePost({ session: serverSession }) {
   const { data: session, status } = useSession();
   const [dbStatus, setDbStatus] = useState(null);
@@ -15,8 +31,9 @@ export default function CreatePost({ session: serverSession }) {
   const [featuredImage, setFeaturedImage] = useState('');
 
   useEffect(() => {
-    if (status === 'loading') return; // Do nothing while loading
-    if (!session) signIn(); // Redirect to sign-in page if not authenticated
+    if (status === 'loading') return;
+    if (!session) signIn();
+    console.log('Session on client-side:', session); // Debugging line
   }, [session, status]);
 
   useEffect(() => {
@@ -48,7 +65,7 @@ export default function CreatePost({ session: serverSession }) {
         content,
         featured_image: featuredImage,
       }, {
-        withCredentials: true, // Ensure credentials (cookies) are sent
+        withCredentials: true,
       });
 
       console.log('Create post response:', response);
@@ -81,7 +98,7 @@ export default function CreatePost({ session: serverSession }) {
         </label>
         <label>
           Content:
-          <ReactQuill value={content} onChange={setContent} />
+          <ReactQuill value={content} onChange={setContent} modules={{ toolbar: toolbarOptions }} />
         </label>
         <label>
           Featured Image URL:
