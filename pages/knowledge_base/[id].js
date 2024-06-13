@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './Article.module.css';
+import styles from './styles/Article.module.css';
 
 export default function Article() {
   const router = useRouter();
