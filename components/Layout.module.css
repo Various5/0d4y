@@ -1,5 +1,3 @@
-/* components/Layout.module.css */
-
 .container {
   display: flex;
   flex-direction: column;
@@ -9,6 +7,9 @@
 .nav {
   background-color: #333;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .menu {
@@ -85,4 +86,11 @@
   border-radius: 5px;
   z-index: 1000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dbStatus {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: #fff;
+  margin-left: auto;
 }
