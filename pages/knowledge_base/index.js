@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './styles/KnowledgeBase.module.css';
+import styles from '../styles/KnowledgeBase.module.css';
 
 export default function KnowledgeBase() {
   const [articles, setArticles] = useState([]);

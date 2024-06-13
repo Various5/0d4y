@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './styles/Post.module.css';
+import styles from '../styles/Post.module.css';
 
 export default function Post() {
   const router = useRouter();
