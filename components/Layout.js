@@ -69,14 +69,8 @@ export default function Layout({ children }) {
               <li><Link href="/iptools">IP-Tools</Link></li>
               <li><Link href="/about">About</Link></li>
               <li><Link href="/profile">Profile</Link></li>
-              <li className={styles.hasSubmenu}>
-                <button className={styles.submenuButton}>
-                  Admin Tools
-                </button>
-                <ul className={styles.submenu}>
-                  <li><Link href="/admin/create-post">Create Blog Post</Link></li>
-                </ul>
-              </li>
+              <li><Link href="/create-post">Create Blog Post</Link></li>
+              <li className={styles.hasSubmenu}></li>
               <li>
                 <button onClick={() => signOut()}>Logout</button>
               </li>

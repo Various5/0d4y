@@ -17,6 +17,7 @@
     "phaser": "^3.80.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-table": "^7.8.0",
     "sanitize-html": "^2.13.0",
     "vuex": "^4.1.0"
