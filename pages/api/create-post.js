@@ -3,7 +3,7 @@ import db from '../../db';
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
-
+  console.log('Session:', session);
   if (!session) {
     return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
   }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css';
@@ -47,6 +47,8 @@ export default function CreatePost({ session: serverSession }) {
         title,
         content,
         featured_image: featuredImage,
+      }, {
+        withCredentials: true, // Ensure credentials (cookies) are sent
       });
 
       console.log('Create post response:', response);
