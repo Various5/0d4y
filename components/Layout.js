@@ -55,7 +55,10 @@ export default function Layout({ children }) {
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/games">Games</Link></li> {/* Games section visible to all */}
+          <li><Link href="/games">Games</Link></li>
+          <li><Link href="/about">About</Link></li>
+          <li><Link href="/downloads">Downloads</Link></li>
+          <li><Link href="/0d4ys">0D4Y's</Link></li>
           {status === 'unauthenticated' && (
             <li>
               <button onClick={() => signIn('google')}>Login</button>
@@ -64,16 +67,11 @@ export default function Layout({ children }) {
           {status === 'authenticated' && (
             <>
               <li><Link href="/tools">Tools</Link></li>
-              <li><Link href="/downloads">Downloads</Link></li>
-              <li><Link href="/0d4ys">0D4Y's</Link></li>
+
               <li><Link href="/iptools">IP-Tools</Link></li>
-              <li><Link href="/about">About</Link></li>
               <li><Link href="/profile">Profile</Link></li>
               <li><Link href="/create-post">Create Blog Post</Link></li>
-              <li className={styles.hasSubmenu}></li>
-              <li>
-                <button onClick={() => signOut()}>Logout</button>
-              </li>
+              <li><button onClick={() => signOut()}>Logout</button></li>
             </>
           )}
         </ul>

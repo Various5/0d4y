@@ -13,6 +13,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'POST') {
       const { title, content, featured_image } = req.body;
+      console.log('Received POST data:', { title, content, featured_image }); // Debugging line
 
       if (!title || !content || !session.user.id) {
         console.error('Missing required fields');
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
           }
         );
       } catch (error) {
-        console.error('Server error:', error);
+        console.error('Server error during database operation:', error);
         return res.status(500).json({ message: 'Server error', error: error.message });
       }
     } else {
