@@ -1,24 +1,21 @@
 import { useState, useEffect } from 'react';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import axios from 'axios';
 
 export default function CreatePost({ session: serverSession }) {
-  const [session, setSession] = useState(serverSession);
+  const { data: session, status } = useSession();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
 
   useEffect(() => {
-    const fetchSession = async () => {
-      const currentSession = await getSession();
-      setSession(currentSession);
-      console.log('Session on client-side:', currentSession); // Debugging line
-    };
+    if (status === 'loading') return; // Do nothing while loading
+    if (!session) signIn(); // Redirect to sign-in page if not authenticated
+  }, [session, status]);
 
-    if (!serverSession) {
-      fetchSession();
-    }
-  }, [serverSession]);
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
 
   if (!session) {
     return <p>You must be signed in to create a blog post.</p>;
@@ -31,17 +28,15 @@ export default function CreatePost({ session: serverSession }) {
         title,
         content,
         featured_image: featuredImage,
-      }, {
-        withCredentials: true,
       });
 
-      console.log('Create post response:', response); // Debugging line
+      console.log('Create post response:', response);
 
       if (response.status === 200) {
         // Reset form or show success message
       }
     } catch (error) {
-      console.error('Error creating post:', error);
+      console.error('Error creating post:', error.response ? error.response.data : error.message);
     }
   };
 
@@ -79,8 +74,6 @@ export default function CreatePost({ session: serverSession }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
-  console.log('Session in getServerSideProps:', session); // Debugging line
 
   if (!session) {
     return {

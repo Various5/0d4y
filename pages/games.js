@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Layout from '../components/Layout';
 import styles from '../styles/Games.module.css';
 
 export default function Games() {
@@ -30,7 +29,7 @@ export default function Games() {
   }, [showGame]);
 
   return (
-    <Layout>
+<div>
       <h1>Games</h1>
       <button onClick={() => handleOpenGame('/games/brickbreaker/index.html')}>Play Brick Breaker</button>
       <button onClick={() => handleOpenGame('/games/marioclone/index.html')}>Play Mario Clone</button>
@@ -43,6 +42,6 @@ export default function Games() {
           <iframe src={gameUrl} className={styles.gameFrame}></iframe>
         </div>
       )}
-    </Layout>
+</div>
   );
 }

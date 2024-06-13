@@ -1,10 +1,8 @@
-import Layout from '../components/Layout';
-
 export default function iptools() {
   return (
-    <Layout>
+<div>
       <h1>IP Tools</h1>
       {/* Your Tools content here */}
-    </Layout>
+      </div>
   );
 }
