@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './Post.module.css';
 
 export default function Post() {
   const router = useRouter();
@@ -27,10 +28,10 @@ export default function Post() {
   }
 
   return (
-    <div>
-      <h1>{post.title}</h1>
-      <img src={post.featured_image} alt={post.title} style={{ width: '300px' }} />
-      <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>{post.title}</h1>
+      <img src={post.featured_image} alt={post.title} className={styles.featuredImage} />
+      <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }}></div>
     </div>
   );
 }

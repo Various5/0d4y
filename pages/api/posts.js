@@ -8,12 +8,12 @@ export default async function handler(req, res) {
   console.log('Request headers:', req.headers); // Debugging line
   console.log('Request method:', req.method); // Debugging line
 
-  if (!session) {
-    console.error('No session found');
-    return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
-  }
-
   if (req.method === 'POST') {
+    if (!session) {
+      console.error('No session found');
+      return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
+    }
+
     const { title, content, featured_image } = req.body;
 
     console.log('Received POST data:', { title, content, featured_image }); // Debugging line
@@ -40,8 +40,20 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: 'Server error', error: error.message });
     }
   } else if (req.method === 'GET') {
+    const { search } = req.query;
+
     try {
-      db.query('SELECT * FROM posts ORDER BY created_at DESC', (err, results) => {
+      let query = 'SELECT * FROM posts';
+      let queryParams = [];
+
+      if (search) {
+        query += ' WHERE title LIKE ? OR content LIKE ?';
+        queryParams = [`%${search}%`, `%${search}%`];
+      }
+
+      query += ' ORDER BY created_at DESC';
+
+      db.query(query, queryParams, (err, results) => {
         if (err) {
           console.error('Database error:', err);
           return res.status(500).json({ message: 'Database error', error: err });
