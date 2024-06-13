@@ -4,28 +4,19 @@ import axios from 'axios';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css';
 
-// Dynamically import the Quill editor
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const toolbarOptions = [
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  ['bold', 'italic', 'underline', 'strike'],
-  ['blockquote', 'code-block'],
-  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-  [{ 'script': 'sub' }, { 'script': 'super' }],
-  [{ 'indent': '-1' }, { 'indent': '+1' }],
-  [{ 'direction': 'rtl' }],
-  [{ 'size': ['small', false, 'large', 'huge'] }],
-  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  [{ 'color': [] }, { 'background': [] }],
-  [{ 'font': [] }],
-  [{ 'align': [] }],
+  [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+  [{size: []}],
+  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+  [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1' }],
+  ['link', 'image'],
   ['clean']
 ];
 
-export default function CreatePost({ session: serverSession }) {
+export default function CreatePost() {
   const { data: session, status } = useSession();
-  const [dbStatus, setDbStatus] = useState(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
@@ -33,21 +24,28 @@ export default function CreatePost({ session: serverSession }) {
   useEffect(() => {
     if (status === 'loading') return;
     if (!session) signIn();
-    console.log('Session on client-side:', session); // Debugging line
   }, [session, status]);
 
-  useEffect(() => {
-    const checkDbStatus = async () => {
-      try {
-        const response = await axios.get('/api/db-status');
-        setDbStatus(response.data.connected);
-      } catch (error) {
-        setDbStatus(false);
-      }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/posts', {
+        title,
+        content,
+        featured_image: featuredImage,
+      }, {
+        withCredentials: true,
+      });
 
-    checkDbStatus();
-  }, []);
+      if (response.status === 200) {
+        setTitle('');
+        setContent('');
+        setFeaturedImage('');
+      }
+    } catch (error) {
+      console.error('Error creating post:', error.response ? error.response.data : error.message);
+    }
+  };
 
   if (status === 'loading') {
     return <p>Loading...</p>;
@@ -57,35 +55,9 @@ export default function CreatePost({ session: serverSession }) {
     return <p>You must be signed in to create a blog post.</p>;
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('/api/create-post', {
-        title,
-        content,
-        featured_image: featuredImage,
-      }, {
-        withCredentials: true,
-      });
-
-      console.log('Create post response:', response);
-
-      if (response.status === 200) {
-        // Reset form or show success message
-      }
-    } catch (error) {
-      console.error('Error creating post:', error.response ? error.response.data : error.message);
-    }
-  };
-
   return (
     <div>
-      <div>
-        <span>Database Status: </span>
-        <span style={{ color: dbStatus ? 'green' : 'red' }}>
-          {dbStatus ? 'Connected' : 'Not Connected'}
-        </span>
-      </div>
+      <h1>Create Post</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Title:
@@ -112,33 +84,4 @@ export default function CreatePost({ session: serverSession }) {
       </form>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  try {
-    const session = await getSession(context);
-
-    console.log('Session in getServerSideProps:', session); // Debugging line
-
-    if (!session) {
-      return {
-        redirect: {
-          destination: '/auth/signin',
-          permanent: false,
-        },
-      };
-    }
-
-    return {
-      props: { session },
-    };
-  } catch (error) {
-    console.error('Error in getServerSideProps:', error); // Log the error
-    return {
-      props: {
-        session: null,
-        error: 'Failed to load session'
-      }
-    };
-  }
 }
