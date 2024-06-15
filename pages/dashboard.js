@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import withAuth from '../utils/withAuth';
+import styles from '../styles/Dashboard.module.css';
 
 function Dashboard() {
   const [dbStatus, setDbStatus] = useState('offline');
@@ -37,12 +38,12 @@ function Dashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <div className="dbStatus" style={{ backgroundColor: dbStatus === 'online' ? 'green' : 'red' }}>
+      <div className={styles.dbStatus} style={{ backgroundColor: dbStatus === 'online' ? 'green' : 'red' }}>
         Database Status: {dbStatus}
       </div>
-      <div className="links">
+      <div className={styles.links}>
         {links.map(link => (
-          <div key={link.url} className="linkItem" style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+          <div key={link.url} className={styles.linkItem}>
             <img src={`https://www.google.com/s2/favicons?domain=${link.url}`} alt={`${link.name} logo`} />
             <a href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>
           </div>

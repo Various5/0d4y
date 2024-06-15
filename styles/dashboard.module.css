@@ -8,6 +8,7 @@
   .links {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
   }
   
   .linkItem {
@@ -16,9 +17,19 @@
     margin: 10px;
     padding: 10px;
     border: 1px solid #ccc;
+    width: 22%;
   }
   
   .linkItem img {
     margin-right: 10px;
+  }
+  
+  .linkItem a {
+    color: #0070f3;
+    text-decoration: none;
+  }
+  
+  .linkItem a:hover {
+    text-decoration: underline;
   }
   
