@@ -10,14 +10,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+}
+
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .menu {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.menu a {
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  border-bottom: 1px solid #ccc;
+}
+
+.menu.open {
   display: flex;
-  align-items: center;
 }
 
 .menu li {

@@ -90,6 +90,7 @@ export default function Layout({ children }) {
               <li><Link href="/profile">Profile</Link></li>
               <li><Link href="/create-post">Create Post</Link></li>
               <li><Link href="/create-knowledge">Create KB Article</Link></li>
+              <li><Link href="/dashboard">Dashboard</Link></li>
               <li><button onClick={() => signOut()}>Logout</button></li>
             </>
           )}

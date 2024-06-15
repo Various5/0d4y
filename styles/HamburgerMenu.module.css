@@ -1,0 +1,32 @@
+.hamburgerMenu {
+    position: relative;
+  }
+  
+  .hamburgerButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .menu {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .menu a {
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .menu a:hover {
+    background: #f0f0f0;
+  }
+  
