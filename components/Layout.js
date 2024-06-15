@@ -9,7 +9,6 @@ export default function Layout({ children }) {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [dbStatus, setDbStatus] = useState('offline');
 
   const toggleMenu = (event) => {
     event.stopPropagation();
@@ -41,23 +40,6 @@ export default function Layout({ children }) {
       setTimeout(() => setShowSuccessMessage(false), 3000); // Hide the message after 3 seconds
     }
   }, [status]);
-
-  useEffect(() => {
-    const checkDbStatus = async () => {
-      try {
-        const response = await fetch('/api/db-status');
-        const data = await response.json();
-        setDbStatus(data.status);
-      } catch (error) {
-        setDbStatus('offline');
-      }
-    };
-
-    checkDbStatus();
-    const interval = setInterval(checkDbStatus, 60000); // Check every minute
-
-    return () => clearInterval(interval);
-  }, []);
 
   if (isLoggingEnabled) {
     console.log('Session status:', status); // Conditional logging
@@ -95,9 +77,6 @@ export default function Layout({ children }) {
             </>
           )}
         </ul>
-        <div className={styles.dbStatus} style={{ backgroundColor: dbStatus === 'online' ? 'green' : 'red' }}>
-          {dbStatus}
-        </div>
       </nav>
       <main className={styles.main}>
         {showSuccessMessage && <div className={styles.successMessage}>Login successful!</div>}

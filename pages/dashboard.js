@@ -2,16 +2,23 @@ import { useState, useEffect } from 'react';
 import withAuth from '../utils/withAuth';
 
 function Dashboard() {
-  const [dbStatus, setDbStatus] = useState(false);
+  const [dbStatus, setDbStatus] = useState('offline');
 
   useEffect(() => {
-    async function fetchDbStatus() {
-      const response = await fetch('/api/db-status');
-      const result = await response.json();
-      setDbStatus(result.status);
-    }
+    const checkDbStatus = async () => {
+      try {
+        const response = await fetch('/api/db-status');
+        const data = await response.json();
+        setDbStatus(data.status);
+      } catch (error) {
+        setDbStatus('offline');
+      }
+    };
 
-    fetchDbStatus();
+    checkDbStatus();
+    const interval = setInterval(checkDbStatus, 60000); // Check every minute
+
+    return () => clearInterval(interval);
   }, []);
 
   const links = [
@@ -30,12 +37,12 @@ function Dashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <div>
-        <h2>Database Status: {dbStatus ? 'Connected' : 'Disconnected'}</h2>
+      <div className="dbStatus" style={{ backgroundColor: dbStatus === 'online' ? 'green' : 'red' }}>
+        Database Status: {dbStatus}
       </div>
-      <div>
+      <div className="links">
         {links.map(link => (
-          <div key={link.url} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+          <div key={link.url} className="linkItem" style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
             <img src={`https://www.google.com/s2/favicons?domain=${link.url}`} alt={`${link.name} logo`} />
             <a href={link.url} target="_blank" rel="noopener noreferrer">{link.name}</a>
           </div>

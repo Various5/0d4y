@@ -1,0 +1,24 @@
+.dbStatus {
+    padding: 10px;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .linkItem {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .linkItem img {
+    margin-right: 10px;
+  }
+  
