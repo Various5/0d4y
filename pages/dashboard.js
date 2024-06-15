@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import withAuth from '../utils/withAuth';
-import styles from '../styles/Dashboard.module.css';
+import styles from '../styles/dashboard.module.css';
 
 function Dashboard() {
   const [dbStatus, setDbStatus] = useState('offline');
