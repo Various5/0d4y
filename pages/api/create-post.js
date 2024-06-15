@@ -1,47 +1,24 @@
 import { getSession } from 'next-auth/react';
-import db from '../../db';
+import db from '../../../db';
 
 export default async function handler(req, res) {
-  try {
+  if (req.method === 'POST') {
     const session = await getSession({ req });
-    console.log('Session in API route:', session); // Debugging line
 
     if (!session) {
-      console.error('No session found');
       return res.status(401).json({ message: 'You must be signed in to create a blog post.' });
     }
 
-    if (req.method === 'POST') {
-      const { title, content, featured_image } = req.body;
-      console.log('Received POST data:', { title, content, featured_image }); // Debugging line
+    const { title, content } = req.body;
 
-      if (!title || !content || !session.user.id) {
-        console.error('Missing required fields');
-        return res.status(400).json({ message: 'Title, content, and user ID are required.' });
-      }
-
-      try {
-        db.query(
-          'INSERT INTO posts (title, content, featured_image, user_id) VALUES (?, ?, ?, ?)',
-          [title, content, featured_image, session.user.id],
-          (err, results) => {
-            if (err) {
-              console.error('Database error:', err);
-              return res.status(500).json({ message: 'Database error', error: err });
-            }
-            res.status(200).json({ message: 'Post created successfully' });
-          }
-        );
-      } catch (error) {
-        console.error('Server error during database operation:', error);
-        return res.status(500).json({ message: 'Server error', error: error.message });
-      }
-    } else {
-      res.setHeader('Allow', ['POST']);
-      return res.status(405).end(`Method ${req.method} Not Allowed`);
+    try {
+      await db.query('INSERT INTO posts (title, content) VALUES (?, ?)', [title, content]);
+      res.status(200).json({ message: 'Post created successfully' });
+    } catch (error) {
+      console.error('Database error during post insertion:', error);
+      res.status(500).json({ message: 'Failed to create post', error: error.message });
     }
-  } catch (error) {
-    console.error('Unexpected error:', error);
-    return res.status(500).json({ message: 'Unexpected error', error: error.message });
+  } else {
+    res.status(405).json({ message: `Method ${req.method} not allowed` });
   }
 }

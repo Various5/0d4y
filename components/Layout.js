@@ -73,7 +73,7 @@ export default function Layout({ children }) {
         <ul className={`${styles.menu} ${isOpen ? styles.open : ''}`}>
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/knowledge_base">Knowledge Base</Link></li>
+          <li><Link href="/knowledge_base">KB</Link></li>
           <li><Link href="/games">Games</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/downloads">Downloads</Link></li>
@@ -88,8 +88,8 @@ export default function Layout({ children }) {
               <li><Link href="/tools">Tools</Link></li>
               <li><Link href="/iptools">IP-Tools</Link></li>
               <li><Link href="/profile">Profile</Link></li>
-              <li><Link href="/create-post">Create Blog Post</Link></li>
-              <li><Link href="/knowledge_base/create">Create Knowledge Base Article</Link></li>
+              <li><Link href="/create-post">Create Post</Link></li>
+              <li><Link href="/create-knowledge">Create KB Article</Link></li>
               <li><button onClick={() => signOut()}>Logout</button></li>
             </>
           )}

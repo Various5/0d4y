@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-function CreatePost() {
+function CreateKnowledgeBase() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [tags, setTags] = useState('');
 
   const handleEditorChange = (content) => {
     setContent(content);
@@ -11,15 +12,15 @@ function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('/api/create-post', {
+    const res = await fetch('/api/knowledge_base', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, content, tags }),
     });
     if (res.ok) {
-      alert('Post created successfully');
+      alert('Article created successfully');
     } else {
-      alert('Failed to create post');
+      alert('Failed to create article');
     }
   };
 
@@ -34,7 +35,7 @@ function CreatePost() {
       />
       <Editor
         apiKey="your-tinymce-api-key"
-        initialValue="<p>Write your post content here...</p>"
+        initialValue="<p>Write your article content here...</p>"
         init={{
           height: 500,
           menubar: false,
@@ -50,9 +51,15 @@ function CreatePost() {
         }}
         onEditorChange={handleEditorChange}
       />
-      <button type="submit">Create Post</button>
+      <input
+        type="text"
+        value={tags}
+        onChange={(e) => setTags(e.target.value)}
+        placeholder="Tags (comma-separated)"
+      />
+      <button type="submit">Create Article</button>
     </form>
   );
 }
 
-export default CreatePost;
+export default CreateKnowledgeBase;
