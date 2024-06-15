@@ -15,7 +15,7 @@ function Dashboard() {
         setDbStatus('offline');
       }
     };
-
+ 
     checkDbStatus();
     const interval = setInterval(checkDbStatus, 60000); // Check every minute
 
