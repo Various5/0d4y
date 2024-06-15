@@ -26,14 +26,16 @@ export default function Layout({ children }) {
       <nav className={styles.nav}>
         <ul className={styles.menu}>
           <li><Link href="/">Home</Link></li>
-          <li><Link href="/blog">Blog</Link>
+          <li className={styles.dropdown}>
+            <Link href="/blog">Blog</Link>
             {status === 'authenticated' && (
               <ul className={styles.submenu}>
                 <li><Link href="/create-post">Create Post</Link></li>
               </ul>
             )}
           </li>
-          <li><Link href="/knowledge_base">KB</Link>
+          <li className={styles.dropdown}>
+            <Link href="/knowledge_base">KB</Link>
             {status === 'authenticated' && (
               <ul className={styles.submenu}>
                 <li><Link href="/create-knowledge">Create KB Article</Link></li>

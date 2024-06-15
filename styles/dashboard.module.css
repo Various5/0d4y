@@ -8,7 +8,7 @@
   .links {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
   }
   
   .linkItem {
@@ -17,7 +17,7 @@
     margin: 10px;
     padding: 10px;
     border: 1px solid #ccc;
-    width: 22%;
+    width: 22%; /* Adjust this percentage to fit four boxes in a row */
   }
   
   .linkItem img {
@@ -32,4 +32,4 @@
   .linkItem a:hover {
     text-decoration: underline;
   }
-   
+  
