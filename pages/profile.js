@@ -1,9 +1,25 @@
-// pages/profile.js
-import withAuth from '../utils/withAuth';
+import { useSession } from 'next-auth/client';
+import styles from './profile.module.css';
 
 const Profile = () => {
-  // Logic for fetching and updating user settings
-  return <div>Profile Page</div>;
+  const [session, loading] = useSession();
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!session) {
+    return <p>You are not logged in. Please log in to view your profile.</p>;
+  }
+
+  return (
+    <div className={styles.profile}>
+      <h1>Profile</h1>
+      <img src={session.user.image} alt="Profile Image" />
+      <p>Name: {session.user.name}</p>
+      <p>Email: {session.user.email}</p>
+    </div>
+  );
 };
 
-export default withAuth(Profile);
+export default Profile;

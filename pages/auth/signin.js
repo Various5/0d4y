@@ -1,15 +1,12 @@
-import { signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/client';
+import styles from '../styles/signin.module.css';
 
 const SignIn = () => {
-  const handleSignIn = (provider) => {
-    console.log(`Signing in with ${provider}`); // Debugging line
-    signIn(provider);
-  };
-
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Sign In</h1>
-      <button onClick={() => handleSignIn('google')}>Sign in with Google</button>
+      <button onClick={() => signIn('google')}>Sign in with Google</button>
+      <button onClick={() => signIn('github')}>Sign in with GitHub</button>
     </div>
   );
 };
