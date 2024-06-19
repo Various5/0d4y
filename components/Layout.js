@@ -1,9 +1,9 @@
-import FuturisticSphereMenu from './FuturisticSphereMenu';
+import CubeMenu from './CubeMenu';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <FuturisticSphereMenu />
+      <CubeMenu />
       <main>{children}</main>
     </>
   );
