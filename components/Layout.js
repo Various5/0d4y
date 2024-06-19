@@ -1,9 +1,9 @@
-import ArtisticMenu from './ArtisticMenu';
+import FuturisticMenu from './FuturisticMenu';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <ArtisticMenu />
+      <FuturisticMenu />
       <main>{children}</main>
     </>
   );
