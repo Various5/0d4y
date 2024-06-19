@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import styles from './Footer.module.css';
 
 const Footer = () => {
   const [dbStatus, setDbStatus] = useState('Checking...');
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
 
   useEffect(() => {
     const fetchDbStatus = async () => {
@@ -26,9 +27,7 @@ const Footer = () => {
         {loading ? (
           <span>Loading...</span>
         ) : session ? (
-          <>
-            <span onClick={() => signOut()}>Logout ¬ {session.user.name}</span>
-          </>
+          <span onClick={() => signOut()}>Logout ¬ {session.user.name}</span>
         ) : (
           <span onClick={() => signIn()}>Login</span>
         )}
