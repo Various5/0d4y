@@ -9,7 +9,7 @@
     text-align: center;
   }
   
-  button {
+  .signInButton {
     margin: 10px;
     padding: 10px 20px;
     background-color: rgba(0, 255, 255, 0.8);
@@ -18,7 +18,7 @@
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
+  .signInButton:hover {
     background-color: rgba(0, 255, 255, 1);
   }
   
