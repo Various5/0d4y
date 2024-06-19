@@ -1,0 +1,61 @@
+.menuContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .sphereMenu {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+  
+  .sphereMenu.open {
+    transform: scale(1.2);
+  }
+  
+  .menuIcon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  
+  .menuItems {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .menuItems.show {
+    display: flex;
+  }
+  
+  .menuItem {
+    margin: 10px 0;
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+  
+  .menuItem:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+  

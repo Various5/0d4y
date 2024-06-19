@@ -1,9 +1,9 @@
-import FuturisticMenu from './FuturisticMenu';
+import FuturisticSphereMenu from './FuturisticSphereMenu';
 
 const Layout = ({ children }) => {
   return (
     <>
-      <FuturisticMenu />
+      <FuturisticSphereMenu />
       <main>{children}</main>
     </>
   );
