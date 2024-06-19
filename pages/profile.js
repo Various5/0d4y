@@ -2,9 +2,9 @@ import { useSession } from 'next-auth/react';
 import styles from '../styles/profile.module.css';
 
 const Profile = () => {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
 
-  if (loading) {
+  if (status === "loading") {
     return <p>Loading...</p>;
   }
 
@@ -15,7 +15,7 @@ const Profile = () => {
   return (
     <div className={styles.profile}>
       <h1>Profile</h1>
-      <img src={session.user.image} alt="Profile Image" />
+      <img src={session.user.image} alt="Profile Image" className={styles.profileImage} />
       <p>Name: {session.user.name}</p>
       <p>Email: {session.user.email}</p>
     </div>
