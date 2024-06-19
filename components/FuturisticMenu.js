@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../styles/FuturisticMenu.module.css';
+import styles from '../styles/FutristicMenu.module.css';
 
 const FuturisticMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
