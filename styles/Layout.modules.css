@@ -1,0 +1,16 @@
+.container {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.6);
+    border-radius: 10px;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .content {
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  

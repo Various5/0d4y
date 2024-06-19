@@ -1,11 +1,17 @@
-import CubeMenu from './CubeMenu';
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import styles from './Layout.module.css';
 
 const Layout = ({ children }) => {
   return (
-    <>
-      <CubeMenu />
-      <main>{children}</main>
-    </>
+    <div className={styles.container}>
+      <Header />
+      <main className={styles.content}>
+        {children}
+      </main>
+      <Footer />
+    </div>
   );
 };
 
