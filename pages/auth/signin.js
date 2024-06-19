@@ -1,5 +1,5 @@
 import { signIn } from 'next-auth/client';
-import styles from './signin.module.css';
+import styles from '../../styles/signin.module.css';
 
 const SignIn = () => {
   return (
