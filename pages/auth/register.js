@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import styles from './register.module.css';
+import styles from '../../styles/Auth.module.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
