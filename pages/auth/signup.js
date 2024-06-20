@@ -1,5 +1,5 @@
 import { signIn } from 'next-auth/react';
-import styles from '../../styles/signup.module.css';
+import styles from '../../styles/Auth.module.css';
 
 const SignUp = () => {
   return (
