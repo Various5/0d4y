@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import styles from '../styles/profile.module.css';
+import styles from './profile.module.css';
 
 const Profile = () => {
   const { data: session, status } = useSession();
@@ -18,6 +18,7 @@ const Profile = () => {
       <img src={session.user.image} alt="Profile Image" className={styles.profileImage} />
       <p>Name: {session.user.name}</p>
       <p>Email: {session.user.email}</p>
+      {session.user.username && <p>Username: {session.user.username}</p>}
     </div>
   );
 };

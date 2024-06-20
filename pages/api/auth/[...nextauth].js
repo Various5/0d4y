@@ -1,9 +1,13 @@
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
+import Providers from 'next-auth/providers';
+import Adapters from 'next-auth/adapters';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export default NextAuth({
   providers: [
-    GoogleProvider({
+    Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
@@ -11,29 +15,30 @@ export default NextAuth({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
+    Providers.Credentials({
+      name: 'Credentials',
+      credentials: {
+        username: { label: 'Username', type: 'text' },
+        password: {  label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        const user = await prisma.user.findUnique({
+          where: { username: credentials.username },
+        });
+
+        if (user && user.password === credentials.password) {
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error',
-  },
-  session: {
-    jwt: true,
-  },
+  adapter: Adapters.Prisma.Adapter({ prisma }),
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-      }
-      console.log('JWT callback:', token);
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.id = token.id;
-      console.log('Session callback:', session);
+    async session(session, user) {
+      session.user.id = user.id;
       return session;
     },
   },
-  
-  debug: true,
 });
