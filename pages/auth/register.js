@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import styles from '../../styles/Auth.module.css';
+import styles from './Auth.module.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -21,6 +21,7 @@ const Register = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
+          className={styles.input}
         />
         <input
           type="password"
@@ -28,11 +29,12 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          className={styles.input}
         />
-        <button type="submit">Register</button>
+        <button type="submit" className={styles.button}>Register</button>
       </form>
-      <button onClick={() => signIn('google')}>Register with Google</button>
-      <button onClick={() => signIn('github')}>Register with GitHub</button>
+      <button className={styles.button} onClick={() => signIn('google')}>Register with Google</button>
+      <button className={styles.button} onClick={() => signIn('github')}>Register with GitHub</button>
     </div>
   );
 };
