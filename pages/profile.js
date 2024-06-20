@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import styles from './profile.module.css';
+import styles from '../styles/rofile.modul.css';
 
 const Profile = () => {
   const { data: session, status } = useSession();
