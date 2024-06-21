@@ -2,8 +2,8 @@ import React from 'react';
 const Home = () => {
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is an example of a modern, dynamic, and responsive web page.</p>
+      <h1>Welcome to 0d4y.ch</h1>
+      <p>This is my place to test out things. Feel free to Contact for any Infos.</p>
     </div>
   );
 };

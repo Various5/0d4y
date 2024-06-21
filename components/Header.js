@@ -10,7 +10,6 @@ const Header = () => {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <a href="/" className={styles.navItem}>Home</a>
-        <a href="/blog" className={styles.navItem}>Blog</a>
         <a href="/games" className={styles.navItem}>Games</a>
         <a href="/0day" className={styles.navItem}>0-Days</a>
         {loading ? (
