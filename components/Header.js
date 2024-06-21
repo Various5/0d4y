@@ -11,7 +11,7 @@ const Header = () => {
         <ul>
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/create-post">Create Post</Link></li>}
+          <li><Link href="/create-post">Create Post</Link></li>
           <li><Link href="/zerodays">0-Days</Link></li>
           {isLoggedIn && <li><Link href="/network-tools">Network Tools</Link></li>}
           {isLoggedIn && <li><Link href="/domain-tools">Domain Tools</Link></li>}
