@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  background: url('/path/to/your/background.jpg') no-repeat center center fixed;
+  background: url('https://0d4y.ch/images/bg1.jpg') no-repeat center center fixed;
   background-size: cover;
 }
 
