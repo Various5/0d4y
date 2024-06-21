@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Blog from './blog';
+import Blog from './Blog';
 import CreatePost from '../components/CreatePost';
 import NetworkTools from './network-tools';
 import DomainTools from './domain-tools';
