@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth';
-import GitHubProvider from 'next-auth/providers/github';
-import GoogleProvider from 'next-auth/providers/google';
+import Providers from 'next-auth/providers';
 import { PrismaClient } from '@prisma/client';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
@@ -8,15 +7,16 @@ const prisma = new PrismaClient();
 
 export default NextAuth({
   providers: [
-    GitHubProvider({
+    Providers.GitHub({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
-    GoogleProvider({
+    Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  database: process.env.DATABASE_URL,
 });
