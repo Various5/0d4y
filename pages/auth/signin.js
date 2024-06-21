@@ -1,14 +1,22 @@
-import { signIn } from 'next-auth/react';
-import styles from './Auth.module.css';
+import { getProviders, signIn } from 'next-auth/react';
 
-const SignIn = () => {
+export default function SignIn({ providers }) {
   return (
-    <div className={styles.container}>
-      <h1>Sign In</h1>
-      <button className={styles.button} onClick={() => signIn('google')}>Sign in with Google</button>
-      <button className={styles.button} onClick={() => signIn('github')}>Sign in with GitHub</button>
+    <div>
+      {Object.values(providers).map((provider) => (
+        <div key={provider.name}>
+          <button onClick={() => signIn(provider.id)}>
+            Sign in with {provider.name}
+          </button>
+        </div>
+      ))}
     </div>
   );
-};
+}
 
-export default SignIn;
+export async function getServerSideProps() {
+  const providers = await getProviders();
+  return {
+    props: { providers },
+  };
+}

@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
+      <h1>Welcome to the 0d4y.ch</h1>
       {session ? (
         <p>Signed in as {session.user.email}</p>
       ) : (

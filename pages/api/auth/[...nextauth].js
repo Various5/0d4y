@@ -19,4 +19,20 @@ export default NextAuth({
   ],
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/auth/signin',
+    error: '/auth/error', // Error code passed in query string as ?error=
+  },
+  callbacks: {
+    async session({ session, user }) {
+      session.userId = user.id;
+      return session;
+    },
+  },
+  events: {
+    async createUser({ user }) {
+      console.log('User created: ', user);
+    },
+  },
+  debug: true,
 });

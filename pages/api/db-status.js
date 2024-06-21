@@ -1,10 +1,22 @@
-import connection from '../../db';
+import { useEffect, useState } from 'react';
 
-export default async function handler(req, res) {
-  try {
-    await connection.query('SELECT 1');
-    res.status(200).json({ status: 'online' });
-  } catch (error) {
-    res.status(500).json({ status: 'offline' });
-  }
-}
+const DbStatus = () => {
+  const [status, setStatus] = useState('Checking...');
+
+  useEffect(() => {
+    // You need to implement an API endpoint that returns the status of your database
+    fetch('/api/db-status')
+      .then((res) => res.json())
+      .then((data) => setStatus(data.status))
+      .catch((error) => setStatus('Offline'));
+  }, []);
+
+  return (
+    <div>
+      <h1>Database Status</h1>
+      <p>Status: {status}</p>
+    </div>
+  );
+};
+
+export default DbStatus;
