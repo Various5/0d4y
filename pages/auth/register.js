@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import styles from './Auth.module.css';
+import axios from 'axios';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -8,34 +8,26 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your registration logic here
+    await axios.post('/api/auth/register', { username, password });
+    signIn('credentials', { username, password });
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          className={styles.input}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className={styles.input}
-        />
-        <button type="submit" className={styles.button}>Register</button>
-      </form>
-      <button className={styles.button} onClick={() => signIn('google')}>Register with Google</button>
-      <button className={styles.button} onClick={() => signIn('github')}>Register with GitHub</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button type="submit">Register</button>
+    </form>
   );
 };
 
