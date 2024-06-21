@@ -24,13 +24,16 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log('Authorizing user...');
         const user = await prisma.user.findUnique({
           where: { username: credentials.username },
         });
 
         if (user && user.password === credentials.password) {
+          console.log('User authorized:', user);
           return user;
         } else {
+          console.log('User not found or incorrect password');
           return null;
         }
       },
@@ -43,4 +46,5 @@ export default NextAuth({
       return session;
     },
   },
+  debug: true, // Enable debug mode
 });
