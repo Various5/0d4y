@@ -1,10 +1,10 @@
 import React from 'react';
 
-const NetworkTools = () => (
+const Adware = () => (
   <div>
-    <h1>Network Tools</h1>
-    <p>Network tools content here...</p>
+    <h1>Adware</h1>
+    <p>Adware content here...</p>
   </div>
 );
 
-export default NetworkTools;
+export default Adware;

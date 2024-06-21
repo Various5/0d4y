@@ -1,18 +1,15 @@
 import '../styles/globals.css';
+import { SessionProvider } from 'next-auth/react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useSession } from 'next-auth/react';
 
-function MyApp({ Component, pageProps }) {
-  const { data: session } = useSession();
-  const isLoggedIn = !!session;
-
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <div>
-      <Header isLoggedIn={isLoggedIn} />
+    <SessionProvider session={session}>
+      <Header />
       <Component {...pageProps} />
-      <Footer isLoggedIn={isLoggedIn} />
-    </div>
+      <Footer />
+    </SessionProvider>
   );
 }
 
