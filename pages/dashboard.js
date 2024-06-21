@@ -15,7 +15,7 @@ function Dashboard() {
         setDbStatus('offline');
       }
     };
- 
+
     checkDbStatus();
     const interval = setInterval(checkDbStatus, 60000); // Check every minute
 
@@ -54,3 +54,9 @@ function Dashboard() {
 }
 
 export default withAuth(Dashboard);
+
+export async function getServerSideProps() {
+  return {
+    props: {}, // Will be passed to the page component as props
+  };
+}

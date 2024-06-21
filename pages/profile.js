@@ -1,26 +1,24 @@
 import { useSession } from 'next-auth/react';
-import styles from '../styles/profile.module.css';
 
 const Profile = () => {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
+  const { data: session } = useSession();
 
   if (!session) {
-    return <p>You are not logged in. Please log in to view your profile.</p>;
+    return <p>You must be logged in to view this page.</p>;
   }
 
   return (
-    <div className={styles.profile}>
+    <div>
       <h1>Profile</h1>
-      <img src={session.user.image} alt="Profile Image" className={styles.profileImage} />
-      <p>Name: {session.user.name}</p>
-      <p>Email: {session.user.email}</p>
-      {session.user.username && <p>Username: {session.user.username}</p>}
+      <p>Welcome, {session.user.name}</p>
     </div>
   );
 };
 
 export default Profile;
+
+export async function getServerSideProps() {
+  return {
+    props: {}, // Will be passed to the page component as props
+  };
+}

@@ -1,35 +1,20 @@
 .dbStatus {
-    padding: 10px;
-    color: white;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .linkItem {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    width: 22%; /* Adjust this percentage to fit four boxes in a row */
-  }
-  
-  .linkItem img {
-    margin-right: 10px;
-  }
-  
-  .linkItem a {
-    color: #0070f3;
-    text-decoration: none;
-  }
-  
-  .linkItem a:hover {
-    text-decoration: underline;
-  }
-  
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.linkItem {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.linkItem img {
+  margin-right: 10px;
+}
