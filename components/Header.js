@@ -12,7 +12,7 @@ const Header = () => {
         <a href="/" className={styles.navItem}>Home</a>
         <a href="/blog" className={styles.navItem}>Blog</a>
         <a href="/games" className={styles.navItem}>Games</a>
-        <a href="/0d4y" className={styles.navItem}>0-Days</a>
+        <a href="/0day" className={styles.navItem}>0-Days</a>
         {loading ? (
           <span>Loading...</span>
         ) : session ? (

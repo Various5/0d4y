@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTable, useSortBy } from 'react-table';
-import styles from '../styles/0d4y.module.css';
+import styles from '../styles/0day.module.css';
 
 export async function getServerSideProps() {
   const res = await fetch('https://0d4y.ch/api/scrape');
