@@ -1,40 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import styles from './Footer.module.css';
+import React from 'react';
+import Link from 'next/link';
 
-const Footer = () => {
-  const [dbStatus, setDbStatus] = useState('Checking...');
-  const { data: session, status } = useSession();
-  const loading = status === "loading";
-
-  useEffect(() => {
-    const fetchDbStatus = async () => {
-      try {
-        const response = await fetch('/api/db-status');
-        const data = await response.json();
-        setDbStatus(data.status);
-      } catch (error) {
-        setDbStatus('offline');
-      }
-    };
-
-    fetchDbStatus();
-  }, []);
-
-  return (
-    <footer className={styles.footer}>
-      <div className={styles.status}>
-        {loading ? (
-          <span>Loading...</span>
-        ) : session ? (
-          <span onClick={() => signOut()}>Logout ¬ {session.user.name}</span>
-        ) : (
-          <span onClick={() => signIn()}>Login</span>
-        )}
-        <span>Database: {dbStatus}</span>
-      </div>
-    </footer>
-  );
-};
+const Footer = ({ isLoggedIn }) => (
+  <footer>
+    <ul>
+      {!isLoggedIn ? <li><Link href="/login">Login</Link></li> : <li><Link href="/logout">Logout</Link></li>}
+      {!isLoggedIn && <li><Link href="/register">Register</Link></li>}
+      <li><Link href="/database-status">Database Status</Link></li>
+      <li><Link href="/contact">Contact</Link></li>
+      <li><Link href="/impressum">Impressum</Link></li>
+      <li><Link href="/games">Games</Link></li>
+    </ul>
+  </footer>
+);
 
 export default Footer;

@@ -1,30 +1,26 @@
 import React from 'react';
-import { useSession } from 'next-auth/react';
-import styles from './Header.module.css';
+import Link from 'next/link';
 
-const Header = () => {
-  const { data: session, status } = useSession();
-  const loading = status === "loading";
-
-  return (
-    <header className={styles.header}>
-      <nav className={styles.nav}>
-        <a href="/" className={styles.navItem}>Home</a>
-        <a href="/games" className={styles.navItem}>Games</a>
-        <a href="/0day" className={styles.navItem}>0-Days</a>
-        {loading ? (
-          <span>Loading...</span>
-        ) : session ? (
-          <>
-            <a href="/profile" className={styles.navItem}>Profile</a>
-            <a href="/create-post" className={styles.navItem}>Create Blogpost</a>
-          </>
-        ) : (
-          <a href="/auth/register" className={styles.navItem}>Register Account</a>
-        )}
-      </nav>
-    </header>
-  );
-};
+const Header = ({ isLoggedIn }) => (
+  <header>
+    <nav>
+      <ul>
+        <li><Link href="/">Home</Link></li>
+        <li><Link href="/blog">Blog</Link></li>
+        {isLoggedIn && <li><Link href="/create-post">Create Post</Link></li>}
+        <li><Link href="/0-days">0-Days</Link></li>
+        {isLoggedIn && <li><Link href="/network-tools">Network Tools</Link></li>}
+        {isLoggedIn && <li><Link href="/domain-tools">Domain Tools</Link></li>}
+        {isLoggedIn && <li><Link href="/malware">Malware</Link></li>}
+        {isLoggedIn && <li><Link href="/phishing">Phishing</Link></li>}
+        {isLoggedIn && <li><Link href="/ransomware">Ransomware</Link></li>}
+        {isLoggedIn && <li><Link href="/spoofing">Spoofing</Link></li>}
+        {isLoggedIn && <li><Link href="/adware">Adware</Link></li>}
+        {isLoggedIn && <li><Link href="/brute-force">Brute Force</Link></li>}
+        {isLoggedIn && <li><Link href="/leaked-stuff">Leaked Stuff</Link></li>}
+      </ul>
+    </nav>
+  </header>
+);
 
 export default Header;

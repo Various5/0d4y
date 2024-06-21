@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Blog from './blog';
+import CreatePost from '../components/CreatePost';
+import NetworkTools from './network-tools';
+import DomainTools from './domain-tools';
+import Malware from './malware';
+import Phishing from './phishing';
+import Ransomware from './ransomware';
+import Spoofing from './spoofing';
+import Adware from './adware';
+import BruteForce from './brute-force';
+import LeakedStuff from './leaked-stuff';
+
 const Home = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Add logic to check if the user is logged in
+  }, []);
+
   return (
     <div>
-      <h1>Welcome to 0d4y.ch</h1>
-      <p>This is my place to test out things. Feel free to Contact for any Infos.</p>
+      <Header isLoggedIn={isLoggedIn} />
+      <main>
+        <Blog />
+      </main>
+      <Footer isLoggedIn={isLoggedIn} />
     </div>
   );
 };
